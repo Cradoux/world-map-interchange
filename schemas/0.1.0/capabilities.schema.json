@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Cradoux/world-map-interchange/main/schemas/0.1.0/capabilities.schema.json",
+  "title": "World Map Interchange consumer capability profile (experimental draft 0.1.0)",
+  "description": "Describes what a consuming application can interpret. Used to report supported, retained and unsupported layers separately from package conformance.",
+  "type": "object",
+  "required": ["consumer", "kinds", "grid_types", "quantities"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "consumer": {
+      "type": "object",
+      "required": ["name"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "version": { "type": "string" }
+      }
+    },
+    "kinds": {
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    },
+    "grid_types": {
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    },
+    "quantities": {
+      "description": "Quantity ids the consumer interprets, or the string 'registry' for every registry quantity.",
+      "oneOf": [
+        { "const": "registry" },
+        { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+      ]
+    },
+    "retain_unrecognised": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, readable layers whose quantity is not recognised are preserved (bytes and metadata) without interpretation."
+    },
+    "required_quantities": {
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true,
+      "description": "Workflow requirements. Unmet requirements are reported, but they never make a package non-conformant."
+    }
+  }
+}

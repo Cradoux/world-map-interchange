@@ -1,0 +1,242 @@
+{
+  "example": "constant-fields",
+  "title": "Constant fields",
+  "package": "examples/valid/constant-fields",
+  "notes": [
+    "encoding.min < encoding.max is always required, even for constant fields.",
+    "The reference helper choose_range picks (-5.0, -4.0) for a constant -5."
+  ],
+  "samples": [
+    {
+      "layer": "elevation",
+      "row": 0,
+      "col": 0,
+      "lat": 84.375,
+      "lon": -174.375,
+      "valid": true,
+      "value": 250.0,
+      "units": "m",
+      "pixel": 0,
+      "tolerance": 7.629510948348211e-06
+    },
+    {
+      "layer": "elevation",
+      "row": 0,
+      "col": 31,
+      "lat": 84.375,
+      "lon": 174.375,
+      "valid": true,
+      "value": 250.0,
+      "units": "m",
+      "pixel": 0,
+      "tolerance": 7.629510948348211e-06
+    },
+    {
+      "layer": "elevation",
+      "row": 15,
+      "col": 0,
+      "lat": -84.375,
+      "lon": -174.375,
+      "valid": true,
+      "value": 250.0,
+      "units": "m",
+      "pixel": 0,
+      "tolerance": 7.629510948348211e-06
+    },
+    {
+      "layer": "elevation",
+      "row": 15,
+      "col": 31,
+      "lat": -84.375,
+      "lon": 174.375,
+      "valid": true,
+      "value": 250.0,
+      "units": "m",
+      "pixel": 0,
+      "tolerance": 7.629510948348211e-06
+    },
+    {
+      "layer": "elevation",
+      "row": 8,
+      "col": 16,
+      "lat": -5.625,
+      "lon": 5.625,
+      "valid": true,
+      "value": 250.0,
+      "units": "m",
+      "pixel": 0,
+      "tolerance": 7.629510948348211e-06
+    },
+    {
+      "layer": "elevation",
+      "row": 4,
+      "col": 10,
+      "lat": 39.375,
+      "lon": -61.875,
+      "valid": true,
+      "value": 250.0,
+      "units": "m",
+      "pixel": 0,
+      "tolerance": 7.629510948348211e-06
+    },
+    {
+      "layer": "elevation",
+      "row": 12,
+      "col": 21,
+      "lat": -50.625,
+      "lon": 61.875,
+      "valid": true,
+      "value": 250.0,
+      "units": "m",
+      "pixel": 0,
+      "tolerance": 7.629510948348211e-06
+    },
+    {
+      "layer": "t-snapshot",
+      "row": 0,
+      "col": 0,
+      "lat": 84.375,
+      "lon": -174.375,
+      "valid": true,
+      "value": -5.0,
+      "units": "degC",
+      "pixel": 0,
+      "tolerance": 7.629510948348211e-06
+    },
+    {
+      "layer": "t-snapshot",
+      "row": 0,
+      "col": 31,
+      "lat": 84.375,
+      "lon": 174.375,
+      "valid": true,
+      "value": -5.0,
+      "units": "degC",
+      "pixel": 0,
+      "tolerance": 7.629510948348211e-06
+    },
+    {
+      "layer": "t-snapshot",
+      "row": 15,
+      "col": 0,
+      "lat": -84.375,
+      "lon": -174.375,
+      "valid": true,
+      "value": -5.0,
+      "units": "degC",
+      "pixel": 0,
+      "tolerance": 7.629510948348211e-06
+    },
+    {
+      "layer": "t-snapshot",
+      "row": 15,
+      "col": 31,
+      "lat": -84.375,
+      "lon": 174.375,
+      "valid": true,
+      "value": -5.0,
+      "units": "degC",
+      "pixel": 0,
+      "tolerance": 7.629510948348211e-06
+    },
+    {
+      "layer": "t-snapshot",
+      "row": 8,
+      "col": 16,
+      "lat": -5.625,
+      "lon": 5.625,
+      "valid": true,
+      "value": -5.0,
+      "units": "degC",
+      "pixel": 0,
+      "tolerance": 7.629510948348211e-06
+    },
+    {
+      "layer": "t-snapshot",
+      "row": 4,
+      "col": 10,
+      "lat": 39.375,
+      "lon": -61.875,
+      "valid": true,
+      "value": -5.0,
+      "units": "degC",
+      "pixel": 0,
+      "tolerance": 7.629510948348211e-06
+    },
+    {
+      "layer": "t-snapshot",
+      "row": 12,
+      "col": 21,
+      "lat": -50.625,
+      "lon": 61.875,
+      "valid": true,
+      "value": -5.0,
+      "units": "degC",
+      "pixel": 0,
+      "tolerance": 7.629510948348211e-06
+    },
+    {
+      "layer": "ocean",
+      "row": 0,
+      "col": 0,
+      "lat": 84.375,
+      "lon": -174.375,
+      "valid": true,
+      "mask": false
+    },
+    {
+      "layer": "ocean",
+      "row": 0,
+      "col": 31,
+      "lat": 84.375,
+      "lon": 174.375,
+      "valid": true,
+      "mask": false
+    },
+    {
+      "layer": "ocean",
+      "row": 15,
+      "col": 0,
+      "lat": -84.375,
+      "lon": -174.375,
+      "valid": true,
+      "mask": false
+    },
+    {
+      "layer": "ocean",
+      "row": 15,
+      "col": 31,
+      "lat": -84.375,
+      "lon": 174.375,
+      "valid": true,
+      "mask": false
+    },
+    {
+      "layer": "ocean",
+      "row": 8,
+      "col": 16,
+      "lat": -5.625,
+      "lon": 5.625,
+      "valid": true,
+      "mask": false
+    },
+    {
+      "layer": "ocean",
+      "row": 4,
+      "col": 10,
+      "lat": 39.375,
+      "lon": -61.875,
+      "valid": true,
+      "mask": false
+    },
+    {
+      "layer": "ocean",
+      "row": 12,
+      "col": 21,
+      "lat": -50.625,
+      "lon": 61.875,
+      "valid": true,
+      "mask": false
+    }
+  ]
+}

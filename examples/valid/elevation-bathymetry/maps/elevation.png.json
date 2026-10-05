@@ -1,0 +1,44 @@
+{
+  "format": "world-map-interchange-sidecar",
+  "format_version": "0.1.0",
+  "generated_from": "manifest.json",
+  "layer": {
+    "id": "elevation",
+    "kind": "scalar",
+    "quantity": "elevation",
+    "title": "Elevation relative to sea level",
+    "description": "Signed: negative values are bathymetry. Encoding range is wider than the observed extrema (see statistics).",
+    "grid": "global-128",
+    "path": "maps/elevation.png",
+    "sha256": "7a2d1a308405c95bab8e2e5674a5ff975609465b802a0497b4cf605237306c41",
+    "units": "m",
+    "encoding": {
+      "type": "png16_linear",
+      "min": -8000.0,
+      "max": 6000.0
+    },
+    "qualifiers": {
+      "datum": "sea_level",
+      "coverage": "full",
+      "surface": "top_of_solid_surface",
+      "lake_treatment": "lake_surface"
+    },
+    "statistics": {
+      "valid_count": 8192,
+      "minimum": -5127.794308,
+      "maximum": 3707.148852,
+      "mean": -899.998949
+    }
+  },
+  "grid": {
+    "type": "lonlat_regular",
+    "width": 128,
+    "height": 64,
+    "bounds": {
+      "west": -180.0,
+      "east": 180.0,
+      "north": 90.0,
+      "south": -90.0
+    }
+  }
+}

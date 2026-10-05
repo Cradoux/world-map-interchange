@@ -1,0 +1,56 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "world-map-interchange"
+version = "0.1.0"
+description = "Reference validator and utilities for the experimental World Map Interchange (WMI) draft format"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+authors = [{ name = "World Map Interchange contributors" }]
+keywords = ["worldbuilding", "terrain", "climate", "raster", "interchange", "png"]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: GIS",
+]
+dependencies = [
+    "numpy>=1.24",
+    "pillow>=10.0",
+    "jsonschema>=4.18",
+]
+
+[project.scripts]
+wmi = "world_map_interchange.cli:main"
+
+[project.urls]
+Repository = "https://github.com/Cradoux/world-map-interchange"
+Issues = "https://github.com/Cradoux/world-map-interchange/issues"
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/world_map_interchange"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"schemas" = "world_map_interchange/_data/schemas"
+"registry" = "world_map_interchange/_data/registry"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "src",
+    "schemas",
+    "registry",
+    "tests",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

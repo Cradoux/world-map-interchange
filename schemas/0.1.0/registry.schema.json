@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Cradoux/world-map-interchange/main/schemas/0.1.0/registry.schema.json",
+  "title": "World Map Interchange quantity registry (experimental draft 0.1.0)",
+  "type": "object",
+  "required": ["registry_version", "units", "quantities"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "registry_version": { "type": "string" },
+    "status": { "type": "string" },
+    "notes": { "type": "array", "items": { "type": "string" } },
+    "units": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["dimension", "scale", "offset", "description"],
+        "additionalProperties": false,
+        "properties": {
+          "dimension": { "type": "string" },
+          "scale": { "type": "number", "exclusiveMinimum": 0, "description": "Multiply by scale then add offset to obtain the dimension's canonical SI-based unit." },
+          "offset": { "type": "number" },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "quantities": {
+      "type": "object",
+      "propertyNames": { "pattern": "^[a-z][a-z0-9_]{0,63}$" },
+      "additionalProperties": { "$ref": "#/$defs/quantity" }
+    }
+  },
+  "$defs": {
+    "quantity": {
+      "type": "object",
+      "required": ["kind", "title", "definition", "temporal", "accumulation", "qualifiers"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": { "enum": ["scalar", "categorical", "mask"] },
+        "title": { "type": "string" },
+        "definition": { "type": "string" },
+        "units": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "canonical_unit": { "type": "string" },
+        "temporal": {
+          "enum": ["snapshot", "aggregated", "any"],
+          "description": "snapshot: no aggregation (state at a time). aggregated: span and aggregation required. any: either."
+        },
+        "positive": { "enum": ["up", "down"] },
+        "vertical_reference": { "type": "string" },
+        "accumulation": { "type": "boolean", "description": "True for accumulated amounts: the first aggregation step must be a sum and no later step may be a sum." },
+        "valid_range": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": { "type": ["number", "null"] },
+          "description": "Physically valid range in canonical units; null means unbounded."
+        },
+        "qualifiers": { "type": "object", "description": "JSON Schema applied to the layer's non-namespaced qualifiers." },
+        "related": { "type": "object" }
+      },
+      "allOf": [
+        {
+          "if": { "required": ["kind"], "properties": { "kind": { "const": "scalar" } } },
+          "then": { "required": ["units", "canonical_unit", "valid_range"] }
+        }
+      ]
+    }
+  }
+}

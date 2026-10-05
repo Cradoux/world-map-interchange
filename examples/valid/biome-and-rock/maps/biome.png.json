@@ -1,0 +1,114 @@
+{
+  "format": "world-map-interchange-sidecar",
+  "format_version": "0.1.0",
+  "generated_from": "manifest.json",
+  "layer": {
+    "id": "biome",
+    "kind": "categorical",
+    "quantity": "biome",
+    "grid": "global-64",
+    "path": "maps/biome.png",
+    "sha256": "90dac56d2163f5ebee953f561540328a43aac2b54d6c965c28cd7c581b25cbc9",
+    "encoding": {
+      "type": "png16_codes"
+    },
+    "class_table": "example-biomes",
+    "source": {
+      "width": 256,
+      "height": 128,
+      "resampling": "mode",
+      "description": "Computed at 256x128 and reduced by majority vote; class codes are never interpolated."
+    }
+  },
+  "grid": {
+    "type": "lonlat_regular",
+    "width": 64,
+    "height": 32,
+    "bounds": {
+      "west": -180.0,
+      "east": 180.0,
+      "north": 90.0,
+      "south": -90.0
+    }
+  },
+  "class_table": {
+    "taxonomy": "example:biomes-v1",
+    "title": "Example biome taxonomy v1",
+    "description": "Producer taxonomy. Marine biomes are kept as marine classes, not mapped to terrestrial ones.",
+    "classes": [
+      {
+        "code": 0,
+        "id": "example:marine_cold",
+        "label": "Cold marine",
+        "color": "#1F4E79",
+        "realm": "marine",
+        "description": "Ocean with annual mean surface water below 12 degC. Code 0 is a real class."
+      },
+      {
+        "code": 1,
+        "id": "example:marine_warm",
+        "label": "Warm marine",
+        "color": "#2E86C1",
+        "realm": "marine",
+        "description": "Ocean with annual mean surface water at or above 12 degC."
+      },
+      {
+        "code": 2,
+        "id": "example:ice_sheet",
+        "label": "Ice sheet",
+        "color": "#F2F4F4",
+        "realm": "terrestrial"
+      },
+      {
+        "code": 3,
+        "id": "example:tundra",
+        "label": "Tundra",
+        "color": "#A9CCE3",
+        "realm": "terrestrial"
+      },
+      {
+        "code": 4,
+        "id": "example:boreal_forest",
+        "label": "Boreal forest",
+        "color": "#1E8449",
+        "realm": "terrestrial"
+      },
+      {
+        "code": 5,
+        "id": "example:temperate_forest",
+        "label": "Temperate forest",
+        "color": "#58D68D",
+        "realm": "terrestrial"
+      },
+      {
+        "code": 6,
+        "id": "example:grassland",
+        "label": "Grassland",
+        "color": "#D4AC0D",
+        "realm": "terrestrial"
+      },
+      {
+        "code": 7,
+        "id": "example:desert",
+        "label": "Desert",
+        "color": "#F5CBA7",
+        "realm": "terrestrial"
+      },
+      {
+        "code": 8,
+        "id": "example:tropical_rainforest",
+        "label": "Tropical rainforest",
+        "color": "#145A32",
+        "realm": "terrestrial"
+      },
+      {
+        "code": 20,
+        "id": "example:freshwater_lake",
+        "label": "Freshwater lake",
+        "color": "#5DADE2",
+        "realm": "freshwater",
+        "description": "Codes need not be contiguous."
+      }
+    ]
+  }
+}

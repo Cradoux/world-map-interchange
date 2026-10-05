@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Cradoux/world-map-interchange/main/schemas/0.1.0/validation-report.schema.json",
+  "title": "Machine-readable output of 'wmi validate --json' (experimental draft 0.1.0)",
+  "type": "object",
+  "required": ["report_version", "target", "conformant", "error_count", "warning_count", "checks", "issues", "layers"],
+  "additionalProperties": false,
+  "properties": {
+    "report_version": { "type": "string" },
+    "target": { "type": "string" },
+    "container": { "enum": ["directory", "zip", null] },
+    "format_version": { "type": ["string", "null"] },
+    "conformant": { "type": "boolean", "description": "True when no error-severity issue was found. Independent of consumer support." },
+    "error_count": { "type": "integer", "minimum": 0 },
+    "warning_count": { "type": "integer", "minimum": 0 },
+    "checks": {
+      "type": "object",
+      "additionalProperties": { "enum": ["passed", "failed", "skipped"] }
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["severity", "code", "message"],
+        "additionalProperties": false,
+        "properties": {
+          "severity": { "enum": ["error", "warning", "info"] },
+          "code": { "type": "string", "pattern": "^[a-z_]+\\.[a-z_]+$" },
+          "message": { "type": "string" },
+          "location": { "type": "string", "description": "JSON Pointer into manifest.json" },
+          "file": { "type": "string", "description": "Package-relative path" }
+        }
+      }
+    },
+    "layers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "quantity", "status", "reasons"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string" },
+          "kind": { "type": "string" },
+          "quantity": { "type": ["string", "null"] },
+          "status": { "enum": ["supported", "retained", "unsupported"] },
+          "reasons": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "consumer": {
+      "type": ["object", "null"],
+      "properties": {
+        "name": { "type": "string" },
+        "required_quantities_missing": { "type": "array", "items": { "type": "string" } },
+        "requirements_met": { "type": "boolean" }
+      }
+    }
+  }
+}

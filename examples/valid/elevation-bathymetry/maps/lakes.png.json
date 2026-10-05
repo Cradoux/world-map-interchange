@@ -1,0 +1,27 @@
+{
+  "format": "world-map-interchange-sidecar",
+  "format_version": "0.1.0",
+  "generated_from": "manifest.json",
+  "layer": {
+    "id": "lakes",
+    "kind": "mask",
+    "quantity": "lake_mask",
+    "grid": "global-128",
+    "path": "maps/lakes.png",
+    "sha256": "eb5489211fb59e9edf654a91bd4f47fea9cb57c598f986fdd47e7d2c578ec9c3",
+    "encoding": {
+      "type": "png8_binary"
+    }
+  },
+  "grid": {
+    "type": "lonlat_regular",
+    "width": 128,
+    "height": 64,
+    "bounds": {
+      "west": -180.0,
+      "east": 180.0,
+      "north": 90.0,
+      "south": -90.0
+    }
+  }
+}

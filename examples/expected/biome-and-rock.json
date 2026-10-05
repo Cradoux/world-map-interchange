@@ -1,0 +1,282 @@
+{
+  "example": "biome-and-rock",
+  "title": "Biome and rock classes with namespaced class tables",
+  "package": "examples/valid/biome-and-rock",
+  "notes": [
+    "Codes 0 (cold marine) and 1 (warm marine) are marine biomes in the producer's own taxonomy.",
+    "Code 0 is a valid class; validity is expressed only by validity masks.",
+    "Colours are optional display hints. Consumers identify classes by code and id, never by colour."
+  ],
+  "samples": [
+    {
+      "layer": "biome",
+      "row": 0,
+      "col": 0,
+      "lat": 87.1875,
+      "lon": -177.1875,
+      "valid": true,
+      "code": 0,
+      "class_id": "example:marine_cold"
+    },
+    {
+      "layer": "biome",
+      "row": 0,
+      "col": 63,
+      "lat": 87.1875,
+      "lon": 177.1875,
+      "valid": true,
+      "code": 0,
+      "class_id": "example:marine_cold"
+    },
+    {
+      "layer": "biome",
+      "row": 31,
+      "col": 0,
+      "lat": -87.1875,
+      "lon": -177.1875,
+      "valid": true,
+      "code": 0,
+      "class_id": "example:marine_cold"
+    },
+    {
+      "layer": "biome",
+      "row": 31,
+      "col": 63,
+      "lat": -87.1875,
+      "lon": 177.1875,
+      "valid": true,
+      "code": 0,
+      "class_id": "example:marine_cold"
+    },
+    {
+      "layer": "biome",
+      "row": 16,
+      "col": 32,
+      "lat": -2.8125,
+      "lon": 2.8125,
+      "valid": true,
+      "code": 8,
+      "class_id": "example:tropical_rainforest"
+    },
+    {
+      "layer": "biome",
+      "row": 8,
+      "col": 21,
+      "lat": 42.1875,
+      "lon": -59.0625,
+      "valid": true,
+      "code": 0,
+      "class_id": "example:marine_cold"
+    },
+    {
+      "layer": "biome",
+      "row": 24,
+      "col": 42,
+      "lat": -47.8125,
+      "lon": 59.0625,
+      "valid": true,
+      "code": 0,
+      "class_id": "example:marine_cold"
+    },
+    {
+      "layer": "biome",
+      "row": 10,
+      "col": 12,
+      "lat": 30.9375,
+      "lon": -109.6875,
+      "valid": true,
+      "code": 1,
+      "class_id": "example:marine_warm"
+    },
+    {
+      "layer": "biome",
+      "row": 1,
+      "col": 1,
+      "lat": 81.5625,
+      "lon": -171.5625,
+      "valid": true,
+      "code": 2,
+      "class_id": "example:ice_sheet"
+    },
+    {
+      "layer": "biome",
+      "row": 5,
+      "col": 0,
+      "lat": 59.0625,
+      "lon": -177.1875,
+      "valid": true,
+      "code": 3,
+      "class_id": "example:tundra"
+    },
+    {
+      "layer": "biome",
+      "row": 7,
+      "col": 0,
+      "lat": 47.8125,
+      "lon": -177.1875,
+      "valid": true,
+      "code": 4,
+      "class_id": "example:boreal_forest"
+    },
+    {
+      "layer": "biome",
+      "row": 10,
+      "col": 0,
+      "lat": 30.9375,
+      "lon": -177.1875,
+      "valid": true,
+      "code": 5,
+      "class_id": "example:temperate_forest"
+    },
+    {
+      "layer": "biome",
+      "row": 8,
+      "col": 11,
+      "lat": 42.1875,
+      "lon": -115.3125,
+      "valid": true,
+      "code": 6,
+      "class_id": "example:grassland"
+    },
+    {
+      "layer": "biome",
+      "row": 14,
+      "col": 4,
+      "lat": 8.4375,
+      "lon": -154.6875,
+      "valid": true,
+      "code": 8,
+      "class_id": "example:tropical_rainforest"
+    },
+    {
+      "layer": "biome",
+      "row": 9,
+      "col": 36,
+      "lat": 36.5625,
+      "lon": 25.3125,
+      "valid": true,
+      "code": 20,
+      "class_id": "example:freshwater_lake"
+    },
+    {
+      "layer": "lithology",
+      "row": 0,
+      "col": 0,
+      "lat": 87.1875,
+      "lon": -177.1875,
+      "valid": true,
+      "code": 0,
+      "class_id": "example:unconsolidated_sediment"
+    },
+    {
+      "layer": "lithology",
+      "row": 0,
+      "col": 63,
+      "lat": 87.1875,
+      "lon": 177.1875,
+      "valid": true,
+      "code": 0,
+      "class_id": "example:unconsolidated_sediment"
+    },
+    {
+      "layer": "lithology",
+      "row": 31,
+      "col": 0,
+      "lat": -87.1875,
+      "lon": -177.1875,
+      "valid": true,
+      "code": 0,
+      "class_id": "example:unconsolidated_sediment"
+    },
+    {
+      "layer": "lithology",
+      "row": 31,
+      "col": 63,
+      "lat": -87.1875,
+      "lon": 177.1875,
+      "valid": true,
+      "code": 0,
+      "class_id": "example:unconsolidated_sediment"
+    },
+    {
+      "layer": "lithology",
+      "row": 16,
+      "col": 32,
+      "lat": -2.8125,
+      "lon": 2.8125,
+      "valid": true,
+      "code": 5,
+      "class_id": "example:metamorphic"
+    },
+    {
+      "layer": "lithology",
+      "row": 8,
+      "col": 21,
+      "lat": 42.1875,
+      "lon": -59.0625,
+      "valid": true,
+      "code": 0,
+      "class_id": "example:unconsolidated_sediment"
+    },
+    {
+      "layer": "lithology",
+      "row": 24,
+      "col": 42,
+      "lat": -47.8125,
+      "lon": 59.0625,
+      "valid": true,
+      "code": 0,
+      "class_id": "example:unconsolidated_sediment"
+    },
+    {
+      "layer": "lithology",
+      "row": 1,
+      "col": 2,
+      "lat": 81.5625,
+      "lon": -165.9375,
+      "valid": true,
+      "code": 1,
+      "class_id": "example:granite"
+    },
+    {
+      "layer": "lithology",
+      "row": 0,
+      "col": 6,
+      "lat": 87.1875,
+      "lon": -143.4375,
+      "valid": true,
+      "code": 2,
+      "class_id": "example:basalt"
+    },
+    {
+      "layer": "lithology",
+      "row": 1,
+      "col": 28,
+      "lat": 81.5625,
+      "lon": -19.6875,
+      "valid": true,
+      "code": 3,
+      "class_id": "example:limestone"
+    },
+    {
+      "layer": "lithology",
+      "row": 1,
+      "col": 30,
+      "lat": 81.5625,
+      "lon": -8.4375,
+      "valid": true,
+      "code": 4,
+      "class_id": "example:sandstone"
+    },
+    {
+      "layer": "lithology",
+      "row": 1,
+      "col": 1,
+      "lat": 81.5625,
+      "lon": -171.5625,
+      "valid": true,
+      "code": 5,
+      "class_id": "example:metamorphic"
+    }
+  ]
+}

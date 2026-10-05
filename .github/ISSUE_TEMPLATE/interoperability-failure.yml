@@ -1,0 +1,51 @@
+name: Interoperability failure
+description: A package written by one tool was rejected or misread by another (or by the reference validator).
+title: "[Interop] "
+labels: ["interoperability"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please attach a **minimal, shareable** package if you can. Synthetic data is ideal. Remove private content and
+        declare the package's licence in `package.license`.
+  - type: input
+    id: producer
+    attributes:
+      label: Producer (tool and version)
+    validations:
+      required: true
+  - type: input
+    id: consumer
+    attributes:
+      label: Consumer (tool and version)
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result
+      description: Errors, wrong values, flipped or shifted maps, missing layers...
+    validations:
+      required: true
+  - type: textarea
+    id: report
+    attributes:
+      label: Reference validator output
+      description: Output of `wmi validate <package> --json`, ideally with `--consumer PROFILE.json` for the consumer.
+      render: json
+  - type: dropdown
+    id: diagnosis
+    attributes:
+      label: Your best guess at the cause
+      options:
+        - Producer wrote a non-conformant package
+        - Consumer misread a conformant package
+        - Specification is ambiguous
+        - Specification doesn't cover this case
+        - Unknown

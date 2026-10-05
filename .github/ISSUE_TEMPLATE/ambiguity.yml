@@ -1,0 +1,36 @@
+name: Ambiguity
+description: Report specification text that is unclear, contradictory or open to more than one reading.
+title: "[Ambiguity] "
+labels: ["ambiguity"]
+body:
+  - type: input
+    id: location
+    attributes:
+      label: Where
+      description: Spec section, schema, registry entry or guide, e.g. "specification.md 9.4".
+    validations:
+      required: true
+  - type: textarea
+    id: text
+    attributes:
+      label: Text in question
+      description: Quote the relevant passage.
+    validations:
+      required: true
+  - type: textarea
+    id: readings
+    attributes:
+      label: Possible readings
+      description: Describe the different interpretations and what each would mean for producers and consumers.
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: Minimal example
+      description: An example manifest fragment or synthetic package where the readings differ, if possible.
+      render: json
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested resolution

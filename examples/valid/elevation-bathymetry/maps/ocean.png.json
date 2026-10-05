@@ -1,0 +1,30 @@
+{
+  "format": "world-map-interchange-sidecar",
+  "format_version": "0.1.0",
+  "generated_from": "manifest.json",
+  "layer": {
+    "id": "ocean",
+    "kind": "mask",
+    "quantity": "ocean_mask",
+    "grid": "global-128",
+    "path": "maps/ocean.png",
+    "sha256": "1845e46128b90dea70652d9b9b5c297a21a67b390edb9ef55ba232540e82864e",
+    "encoding": {
+      "type": "png8_binary"
+    },
+    "qualifiers": {
+      "classification": "cell_centre"
+    }
+  },
+  "grid": {
+    "type": "lonlat_regular",
+    "width": 128,
+    "height": 64,
+    "bounds": {
+      "west": -180.0,
+      "east": 180.0,
+      "north": 90.0,
+      "south": -90.0
+    }
+  }
+}

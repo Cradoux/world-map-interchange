@@ -1,0 +1,57 @@
+{
+  "format": "world-map-interchange-sidecar",
+  "format_version": "0.1.0",
+  "generated_from": "manifest.json",
+  "layer": {
+    "id": "t-annual-mean",
+    "kind": "scalar",
+    "quantity": "air_temperature",
+    "grid": "tiny",
+    "path": "maps/t-annual-mean.png",
+    "sha256": "407f4a045eb2518126b298a4a9f48d7db18524595052c49ceb3f43ef5c533eba",
+    "units": "degC",
+    "encoding": {
+      "type": "png16_linear",
+      "min": -60.0,
+      "max": 40.0
+    },
+    "qualifiers": {
+      "elevation_reference": "terrain"
+    },
+    "time": {
+      "calendar": "aster",
+      "label": "annual mean",
+      "span": {
+        "start": {
+          "year": 1
+        },
+        "end": {
+          "year": 30
+        }
+      },
+      "aggregation": [
+        {
+          "statistic": "mean",
+          "over": "timesteps",
+          "within": "year"
+        },
+        {
+          "statistic": "mean",
+          "over": "years"
+        }
+      ],
+      "timestep_s": 25200
+    }
+  },
+  "grid": {
+    "type": "lonlat_regular",
+    "width": 16,
+    "height": 8,
+    "bounds": {
+      "west": -180.0,
+      "east": 180.0,
+      "north": 90.0,
+      "south": -90.0
+    }
+  }
+}

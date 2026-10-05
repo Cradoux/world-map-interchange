@@ -1,0 +1,360 @@
+{
+  "$schema": "../../schemas/0.1.0/registry.schema.json",
+  "registry_version": "0.1.0",
+  "status": "experimental draft",
+  "notes": [
+    "Every quantity is optional. A bundle may contain any subset, and consumers decide which quantities a workflow requires.",
+    "Quantity identifiers without a namespace are reserved for this registry. Tools use namespaced identifiers (for example 'mytool:soil_moisture_index') for anything else.",
+    "Related CF standard names are informative. The definitions here are authoritative for WMI, and WMI bundles do not claim CF compliance.",
+    "The unit 'd' always means 86400 SI seconds, never a local solar day of a fictional world."
+  ],
+  "units": {
+    "m": { "dimension": "length", "scale": 1.0, "offset": 0.0, "description": "metre" },
+    "km": { "dimension": "length", "scale": 1000.0, "offset": 0.0, "description": "kilometre" },
+    "cm": { "dimension": "length", "scale": 0.01, "offset": 0.0, "description": "centimetre" },
+    "mm": { "dimension": "length", "scale": 0.001, "offset": 0.0, "description": "millimetre (for water amounts: liquid water equivalent depth)" },
+    "K": { "dimension": "temperature", "scale": 1.0, "offset": 0.0, "description": "kelvin" },
+    "degC": { "dimension": "temperature", "scale": 1.0, "offset": 273.15, "description": "degree Celsius" },
+    "kg m-2": { "dimension": "areal_mass", "scale": 1.0, "offset": 0.0, "description": "kilogram per square metre; for liquid water 1 kg m-2 corresponds to 1 mm depth" },
+    "kg m-2 s-1": { "dimension": "areal_mass_flux", "scale": 1.0, "offset": 0.0, "description": "kilogram per square metre per second" },
+    "mm s-1": { "dimension": "length_rate", "scale": 0.001, "offset": 0.0, "description": "millimetre (liquid water equivalent) per SI second" },
+    "mm h-1": { "dimension": "length_rate", "scale": 2.777777777777778e-07, "offset": 0.0, "description": "millimetre per hour (3600 s)" },
+    "mm d-1": { "dimension": "length_rate", "scale": 1.1574074074074074e-08, "offset": 0.0, "description": "millimetre per day of exactly 86400 s" },
+    "1": { "dimension": "dimensionless", "scale": 1.0, "offset": 0.0, "description": "dimensionless fraction or index" },
+    "m3 m-3": { "dimension": "volume_fraction", "scale": 1.0, "offset": 0.0, "description": "cubic metre of water per cubic metre of soil" }
+  },
+  "quantities": {
+    "elevation": {
+      "kind": "scalar",
+      "title": "Surface elevation",
+      "definition": "Signed vertical distance of the top of the solid surface above the vertical datum named by the 'datum' qualifier, positive upwards. On land this is the terrain surface; in the ocean it is the sea floor. If the datum is 'sea_level' the value is elevation relative to sea level, and sea level is exactly 0 m. If the datum is declared in world.vertical_datums, elevation relative to sea level is the value minus that datum's sea_level_m.",
+      "units": ["m", "km"],
+      "canonical_unit": "m",
+      "temporal": "snapshot",
+      "positive": "up",
+      "vertical_reference": "Required 'datum' qualifier. Sea level in physical units is 0 for 'sea_level', or the declared sea_level_m of another datum. Any pixel value corresponding to sea level is derived from the decode contract and is never stored as a separate authority.",
+      "accumulation": false,
+      "valid_range": [null, null],
+      "qualifiers": {
+        "type": "object",
+        "required": ["datum", "coverage"],
+        "additionalProperties": false,
+        "properties": {
+          "datum": { "type": "string", "description": "'sea_level', or the id of an entry in world.vertical_datums." },
+          "coverage": {
+            "enum": ["full", "land_clamped", "land_masked"],
+            "description": "'full': real values everywhere, including bathymetry below sea level. 'land_clamped': terrain below the clamp value was replaced by clamp_value, so samples equal to clamp_value are not real elevations. 'land_masked': sub-sea-level areas are marked invalid by the validity mask."
+          },
+          "clamp_value": { "type": "number", "description": "Required for land_clamped. The value, in layer units relative to the datum, written in place of clamped terrain." },
+          "surface": { "enum": ["top_of_solid_surface", "bedrock", "unspecified"], "description": "Whether ice sheets are included (top of solid surface) or removed (bedrock)." },
+          "lake_treatment": { "enum": ["lake_bed", "lake_surface", "unspecified"], "description": "Whether lake areas give the lake bed or the water surface." }
+        },
+        "if": { "properties": { "coverage": { "const": "land_clamped" } } },
+        "then": { "required": ["clamp_value"] }
+      },
+      "related": { "cf_standard_name": "surface_altitude", "note": "CF surface_altitude is relative to the geoid. WMI elevation uses an explicitly declared datum." }
+    },
+    "sea_floor_depth": {
+      "kind": "scalar",
+      "title": "Sea-floor depth (bathymetry)",
+      "definition": "Vertical distance of the sea floor below sea level, positive downwards. It is valid only where a sample is ocean, and land samples must be invalid. This quantity is distinct from elevation: a sea floor 3000 m below sea level has sea_floor_depth +3000 m and elevation -3000 m.",
+      "units": ["m", "km"],
+      "canonical_unit": "m",
+      "temporal": "snapshot",
+      "positive": "down",
+      "vertical_reference": "Always relative to sea level, so sea level is 0 m depth.",
+      "accumulation": false,
+      "valid_range": [0, null],
+      "qualifiers": { "type": "object", "additionalProperties": false, "properties": {} },
+      "related": { "cf_standard_name": "sea_floor_depth_below_sea_level" }
+    },
+    "ocean_mask": {
+      "kind": "mask",
+      "title": "Ocean mask",
+      "definition": "Binary mask. 255 means the sample is ocean (sea water connected to the world ocean, including marginal seas) and 0 means it is not. Lakes and rivers are never ocean. Use lake_mask and river_mask for those.",
+      "temporal": "snapshot",
+      "accumulation": false,
+      "qualifiers": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "classification": { "enum": ["cell_centre", "majority", "any", "unspecified"], "description": "How a partially covered cell was classified." }
+        }
+      },
+      "related": { "cf_standard_name": "sea_binary_mask" }
+    },
+    "lake_mask": {
+      "kind": "mask",
+      "title": "Lake mask",
+      "definition": "Binary mask. 255 means the sample is an inland standing water body (lake or reservoir, fresh or saline) not connected to the ocean, and 0 means it is not.",
+      "temporal": "snapshot",
+      "accumulation": false,
+      "qualifiers": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "classification": { "enum": ["cell_centre", "majority", "any", "unspecified"] }
+        }
+      }
+    },
+    "river_mask": {
+      "kind": "mask",
+      "title": "River mask",
+      "definition": "Binary mask. 255 means the sample contains a rasterised river channel and 0 means it does not. Rivers are usually narrower than a cell, so this marks network presence, not channel area.",
+      "temporal": "snapshot",
+      "accumulation": false,
+      "qualifiers": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "rasterisation": { "type": "string", "description": "How the network was rasterised, for example a minimum drainage-area threshold." }
+        }
+      }
+    },
+    "air_temperature": {
+      "kind": "scalar",
+      "title": "Near-surface air temperature",
+      "definition": "Temperature of the air near the surface. The statistic (mean, minimum, maximum and so on) and its period are given by the layer's time block, or the value is a snapshot when time is absent.",
+      "units": ["K", "degC"],
+      "canonical_unit": "K",
+      "temporal": "any",
+      "accumulation": false,
+      "valid_range": [0, null],
+      "vertical_reference": "Required 'elevation_reference' qualifier: 'terrain' means the value applies at the actual surface elevation. 'sea_level_reduced' means it has been adjusted to sea level, for example with a lapse rate.",
+      "qualifiers": {
+        "type": "object",
+        "required": ["elevation_reference"],
+        "additionalProperties": false,
+        "properties": {
+          "elevation_reference": { "enum": ["terrain", "sea_level_reduced"] },
+          "height_above_surface_m": { "type": "number", "minimum": 0, "description": "Measurement height above the surface, for example 2." },
+          "lapse_rate_K_per_m": { "type": "number", "description": "Lapse rate used for sea-level reduction, if constant." },
+          "reduction_method": { "type": "string" }
+        }
+      },
+      "related": { "cf_standard_name": "air_temperature" }
+    },
+    "surface_temperature": {
+      "kind": "scalar",
+      "title": "Surface (skin) temperature",
+      "definition": "Temperature of the surface itself (ground, ice, snow or water skin), not of the air above it.",
+      "units": ["K", "degC"],
+      "canonical_unit": "K",
+      "temporal": "any",
+      "accumulation": false,
+      "valid_range": [0, null],
+      "vertical_reference": "Required 'elevation_reference' qualifier, as for air_temperature.",
+      "qualifiers": {
+        "type": "object",
+        "required": ["elevation_reference"],
+        "additionalProperties": false,
+        "properties": {
+          "elevation_reference": { "enum": ["terrain", "sea_level_reduced"] },
+          "lapse_rate_K_per_m": { "type": "number" },
+          "reduction_method": { "type": "string" }
+        }
+      },
+      "related": { "cf_standard_name": "surface_temperature" }
+    },
+    "sea_surface_temperature": {
+      "kind": "scalar",
+      "title": "Sea-surface temperature",
+      "definition": "Temperature of sea water near the ocean surface. Valid only for ocean samples, and land samples must be invalid. This is distinct from air temperature over the ocean.",
+      "units": ["K", "degC"],
+      "canonical_unit": "K",
+      "temporal": "any",
+      "accumulation": false,
+      "valid_range": [0, null],
+      "qualifiers": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "depth_m": { "type": "number", "minimum": 0, "description": "Representative depth, if known." }
+        }
+      },
+      "related": { "cf_standard_name": "sea_surface_temperature" }
+    },
+    "rainfall_amount": {
+      "kind": "scalar",
+      "title": "Rainfall amount (liquid only)",
+      "definition": "Accumulated liquid precipitation (rain and drizzle) only, expressed as liquid water depth or mass per area. The accumulation period is given by the first aggregation step, which must be a sum.",
+      "units": ["mm", "m", "kg m-2"],
+      "canonical_unit": "kg m-2",
+      "temporal": "aggregated",
+      "accumulation": true,
+      "valid_range": [0, null],
+      "qualifiers": { "type": "object", "additionalProperties": false, "properties": {} },
+      "related": { "cf_standard_name": "rainfall_amount" }
+    },
+    "rainfall_rate": {
+      "kind": "scalar",
+      "title": "Rainfall rate (liquid only)",
+      "definition": "Rate of liquid precipitation as water depth or mass per area per time. Aggregation statistics apply to the rate itself (for example the mean rate), never a sum.",
+      "units": ["kg m-2 s-1", "mm s-1", "mm h-1", "mm d-1"],
+      "canonical_unit": "kg m-2 s-1",
+      "temporal": "any",
+      "accumulation": false,
+      "valid_range": [0, null],
+      "qualifiers": { "type": "object", "additionalProperties": false, "properties": {} },
+      "related": { "cf_standard_name": "rainfall_flux" }
+    },
+    "precipitation_amount": {
+      "kind": "scalar",
+      "title": "Total precipitation amount (all phases)",
+      "definition": "Accumulated precipitation of all phases (rain, snow, sleet, hail) as liquid water equivalent. The accumulation period is given by the first aggregation step, which must be a sum.",
+      "units": ["mm", "m", "kg m-2"],
+      "canonical_unit": "kg m-2",
+      "temporal": "aggregated",
+      "accumulation": true,
+      "valid_range": [0, null],
+      "qualifiers": { "type": "object", "additionalProperties": false, "properties": {} },
+      "related": { "cf_standard_name": "precipitation_amount" }
+    },
+    "precipitation_rate": {
+      "kind": "scalar",
+      "title": "Total precipitation rate (all phases)",
+      "definition": "Rate of precipitation of all phases as liquid water equivalent.",
+      "units": ["kg m-2 s-1", "mm s-1", "mm h-1", "mm d-1"],
+      "canonical_unit": "kg m-2 s-1",
+      "temporal": "any",
+      "accumulation": false,
+      "valid_range": [0, null],
+      "qualifiers": { "type": "object", "additionalProperties": false, "properties": {} },
+      "related": { "cf_standard_name": "precipitation_flux" }
+    },
+    "snowfall_amount": {
+      "kind": "scalar",
+      "title": "Snowfall amount (liquid water equivalent)",
+      "definition": "Accumulated solid precipitation as liquid water equivalent. This is not the depth of fresh snow, and not snow depth on the ground. The first aggregation step must be a sum.",
+      "units": ["mm", "m", "kg m-2"],
+      "canonical_unit": "kg m-2",
+      "temporal": "aggregated",
+      "accumulation": true,
+      "valid_range": [0, null],
+      "qualifiers": { "type": "object", "additionalProperties": false, "properties": {} },
+      "related": { "cf_standard_name": "snowfall_amount" }
+    },
+    "snowfall_rate": {
+      "kind": "scalar",
+      "title": "Snowfall rate (liquid water equivalent)",
+      "definition": "Rate of solid precipitation as liquid water equivalent.",
+      "units": ["kg m-2 s-1", "mm s-1", "mm h-1", "mm d-1"],
+      "canonical_unit": "kg m-2 s-1",
+      "temporal": "any",
+      "accumulation": false,
+      "valid_range": [0, null],
+      "qualifiers": { "type": "object", "additionalProperties": false, "properties": {} },
+      "related": { "cf_standard_name": "snowfall_flux" }
+    },
+    "snow_depth": {
+      "kind": "scalar",
+      "title": "Snow depth",
+      "definition": "Physical thickness of the snowpack on the ground. This is not water equivalent.",
+      "units": ["m", "cm", "mm"],
+      "canonical_unit": "m",
+      "temporal": "any",
+      "accumulation": false,
+      "valid_range": [0, null],
+      "qualifiers": { "type": "object", "additionalProperties": false, "properties": {} },
+      "related": { "cf_standard_name": "surface_snow_thickness" }
+    },
+    "snow_water_equivalent": {
+      "kind": "scalar",
+      "title": "Snow water equivalent",
+      "definition": "Mass of water stored in the snowpack per unit area, or the equivalent liquid water depth.",
+      "units": ["kg m-2", "mm", "m"],
+      "canonical_unit": "kg m-2",
+      "temporal": "any",
+      "accumulation": false,
+      "valid_range": [0, null],
+      "qualifiers": { "type": "object", "additionalProperties": false, "properties": {} },
+      "related": { "cf_standard_name": "surface_snow_amount" }
+    },
+    "snow_cover_fraction": {
+      "kind": "scalar",
+      "title": "Snow-cover fraction",
+      "definition": "Fraction of the cell area covered by snow, from 0 to 1. This is a continuous fraction, not a binary mask.",
+      "units": ["1"],
+      "canonical_unit": "1",
+      "temporal": "any",
+      "accumulation": false,
+      "valid_range": [0, 1],
+      "qualifiers": { "type": "object", "additionalProperties": false, "properties": {} },
+      "related": { "cf_standard_name": "surface_snow_area_fraction" }
+    },
+    "volumetric_soil_moisture": {
+      "kind": "scalar",
+      "title": "Volumetric soil moisture",
+      "definition": "Volume of water per volume of soil within the declared soil layer.",
+      "units": ["m3 m-3"],
+      "canonical_unit": "m3 m-3",
+      "temporal": "any",
+      "accumulation": false,
+      "valid_range": [0, 1],
+      "vertical_reference": "Required depth_top_m and depth_bottom_m, measured below the surface.",
+      "qualifiers": {
+        "type": "object",
+        "required": ["depth_top_m", "depth_bottom_m", "frozen_water"],
+        "additionalProperties": false,
+        "properties": {
+          "depth_top_m": { "type": "number", "minimum": 0 },
+          "depth_bottom_m": { "type": "number", "exclusiveMinimum": 0 },
+          "frozen_water": { "enum": ["included", "excluded", "unknown"], "description": "Whether soil ice counts as moisture." }
+        }
+      },
+      "related": { "cf_standard_name": "volume_fraction_of_condensed_water_in_soil" }
+    },
+    "soil_moisture_content": {
+      "kind": "scalar",
+      "title": "Soil moisture content",
+      "definition": "Mass of water per unit area contained in the declared soil layer.",
+      "units": ["kg m-2", "mm"],
+      "canonical_unit": "kg m-2",
+      "temporal": "any",
+      "accumulation": false,
+      "valid_range": [0, null],
+      "vertical_reference": "Required depth_top_m and depth_bottom_m, measured below the surface.",
+      "qualifiers": {
+        "type": "object",
+        "required": ["depth_top_m", "depth_bottom_m", "frozen_water"],
+        "additionalProperties": false,
+        "properties": {
+          "depth_top_m": { "type": "number", "minimum": 0 },
+          "depth_bottom_m": { "type": "number", "exclusiveMinimum": 0 },
+          "frozen_water": { "enum": ["included", "excluded", "unknown"] }
+        }
+      },
+      "related": { "cf_standard_name": "mass_content_of_water_in_soil_layer" }
+    },
+    "biome": {
+      "kind": "categorical",
+      "title": "Biome",
+      "definition": "Biome or ecoregion class from the producer's own taxonomy, declared in the referenced class table. Marine, freshwater and terrestrial biomes may coexist in one table, and no common taxonomy is imposed.",
+      "temporal": "any",
+      "accumulation": false,
+      "qualifiers": { "type": "object", "additionalProperties": false, "properties": {} }
+    },
+    "lithology": {
+      "kind": "categorical",
+      "title": "Lithology / rock type",
+      "definition": "Rock or sediment type class from the producer's own taxonomy, declared in the referenced class table.",
+      "temporal": "snapshot",
+      "accumulation": false,
+      "qualifiers": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "level": { "enum": ["surface", "bedrock", "unspecified"], "description": "Whether classes describe exposed surface material or underlying bedrock." }
+        }
+      }
+    },
+    "land_cover": {
+      "kind": "categorical",
+      "title": "Land cover",
+      "definition": "Observed or simulated surface cover class (for example forest, bare rock, ice or water) from the producer's taxonomy. This is distinct from biome, which describes ecological or climatic potential.",
+      "temporal": "any",
+      "accumulation": false,
+      "qualifiers": { "type": "object", "additionalProperties": false, "properties": {} }
+    }
+  }
+}

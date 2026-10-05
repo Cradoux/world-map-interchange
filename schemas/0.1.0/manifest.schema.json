@@ -1,0 +1,482 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Cradoux/world-map-interchange/main/schemas/0.1.0/manifest.schema.json",
+  "title": "World Map Interchange manifest (experimental draft 0.1.0)",
+  "description": "Structural schema for manifest.json. Semantic rules that JSON Schema cannot express (cross-references, registry units, aggregation order, file contents) are defined in the specification and checked by the reference validator.",
+  "type": "object",
+  "required": ["format", "format_version", "package", "world", "grids", "layers"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "format": { "const": "world-map-interchange" },
+    "format_version": { "type": "string", "pattern": "^0\\.1\\.(0|[1-9][0-9]*)$" },
+    "package": { "$ref": "#/$defs/package" },
+    "world": { "$ref": "#/$defs/world" },
+    "source": { "$ref": "#/$defs/source" },
+    "calendars": {
+      "type": "object",
+      "propertyNames": { "$ref": "#/$defs/localId" },
+      "additionalProperties": { "$ref": "#/$defs/calendar" }
+    },
+    "grids": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": { "$ref": "#/$defs/localId" },
+      "additionalProperties": { "$ref": "#/$defs/grid" }
+    },
+    "class_tables": {
+      "type": "object",
+      "propertyNames": { "$ref": "#/$defs/localId" },
+      "additionalProperties": { "$ref": "#/$defs/classTable" }
+    },
+    "layers": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/layer" }
+    },
+    "extensions": { "$ref": "#/$defs/extensions" }
+  },
+  "$defs": {
+    "localId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_.-]{0,63}$"
+    },
+    "namespacedId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{0,31}:[a-z0-9][a-z0-9_.-]{0,63}$"
+    },
+    "registryId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]{0,63}$"
+    },
+    "text": { "type": "string", "minLength": 1, "maxLength": 8000 },
+    "shortText": { "type": "string", "minLength": 1, "maxLength": 256 },
+    "url": { "type": "string", "pattern": "^https?://[^\\s]+$", "maxLength": 2000 },
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "dateTime": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2})$"
+    },
+    "payloadPath": {
+      "type": "string",
+      "maxLength": 240,
+      "pattern": "^(maps|masks|previews)(/[A-Za-z0-9][A-Za-z0-9._-]*)+$"
+    },
+    "extensions": {
+      "type": "object",
+      "description": "Namespaced, producer-specific metadata. Consumers that do not recognise a namespace must ignore it and should preserve it.",
+      "propertyNames": { "$ref": "#/$defs/namespacedId" }
+    },
+    "producer": {
+      "type": "object",
+      "required": ["name", "version"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "$ref": "#/$defs/shortText" },
+        "version": { "$ref": "#/$defs/shortText" },
+        "url": { "$ref": "#/$defs/url" }
+      }
+    },
+    "package": {
+      "type": "object",
+      "required": ["id", "created", "producer", "license"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/shortText", "description": "Globally unique package identifier, ideally urn:uuid:..." },
+        "title": { "$ref": "#/$defs/shortText" },
+        "description": { "$ref": "#/$defs/text" },
+        "created": { "$ref": "#/$defs/dateTime", "description": "Wall-clock creation time of this package (RFC 3339). Not simulation time." },
+        "producer": { "$ref": "#/$defs/producer" },
+        "license": { "$ref": "#/$defs/shortText", "description": "SPDX licence expression (or LicenseRef-*) for the package content." },
+        "attribution": { "$ref": "#/$defs/text" },
+        "url": { "$ref": "#/$defs/url" }
+      }
+    },
+    "world": {
+      "type": "object",
+      "required": ["id", "body"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/shortText" },
+        "name": { "$ref": "#/$defs/shortText" },
+        "description": { "$ref": "#/$defs/text" },
+        "body": {
+          "type": "object",
+          "required": ["shape", "radius_m"],
+          "additionalProperties": false,
+          "properties": {
+            "shape": { "const": "sphere" },
+            "radius_m": {
+              "description": "Radius of the reference sphere in metres, or null if unknown. Unknown must not be replaced by Earth's radius.",
+              "oneOf": [{ "type": "number", "exclusiveMinimum": 0 }, { "type": "null" }]
+            }
+          }
+        },
+        "sea_level_description": { "$ref": "#/$defs/text" },
+        "vertical_datums": {
+          "type": "object",
+          "propertyNames": { "allOf": [{ "$ref": "#/$defs/localId" }, { "not": { "const": "sea_level" } }] },
+          "additionalProperties": {
+            "type": "object",
+            "required": ["description", "sea_level_m"],
+            "additionalProperties": false,
+            "properties": {
+              "description": { "$ref": "#/$defs/text" },
+              "sea_level_m": { "type": "number", "description": "Height of sea level above this datum, in metres." }
+            }
+          }
+        }
+      }
+    },
+    "timePoint": {
+      "type": "object",
+      "required": ["calendar", "year"],
+      "additionalProperties": false,
+      "properties": {
+        "calendar": { "$ref": "#/$defs/localId" },
+        "year": { "type": "integer" },
+        "period": { "$ref": "#/$defs/localId" },
+        "day": { "type": "integer", "minimum": 1 },
+        "label": { "$ref": "#/$defs/shortText" }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "simulation_id": { "$ref": "#/$defs/shortText" },
+        "run_id": { "$ref": "#/$defs/shortText" },
+        "snapshot_id": { "$ref": "#/$defs/shortText" },
+        "simulation_time": { "$ref": "#/$defs/timePoint" },
+        "source_heightmap": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": false,
+          "properties": {
+            "id": { "$ref": "#/$defs/shortText" },
+            "sha256": { "$ref": "#/$defs/sha256" },
+            "description": { "$ref": "#/$defs/text" }
+          }
+        }
+      }
+    },
+    "calendar": {
+      "type": "object",
+      "required": ["kind"],
+      "properties": {
+        "kind": { "enum": ["fixed", "proleptic_gregorian"] },
+        "description": { "$ref": "#/$defs/text" },
+        "day_length_s": {
+          "description": "Length of one calendar day in SI seconds, or null if unknown.",
+          "oneOf": [{ "type": "number", "exclusiveMinimum": 0 }, { "type": "null" }]
+        },
+        "year_length_days": { "type": "number", "exclusiveMinimum": 0 },
+        "periods": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["id", "length_days"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "$ref": "#/$defs/localId" },
+              "label": { "$ref": "#/$defs/shortText" },
+              "length_days": { "type": "number", "exclusiveMinimum": 0 }
+            }
+          }
+        },
+        "leap_rule": { "$ref": "#/$defs/text" }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": { "required": ["kind"], "properties": { "kind": { "const": "fixed" } } },
+          "then": { "required": ["year_length_days"] }
+        },
+        {
+          "if": { "required": ["kind"], "properties": { "kind": { "const": "proleptic_gregorian" } } },
+          "then": {
+            "properties": { "periods": false, "year_length_days": false, "day_length_s": false, "leap_rule": false }
+          }
+        }
+      ]
+    },
+    "grid": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "anyOf": [{ "const": "lonlat_regular" }, { "$ref": "#/$defs/namespacedId" }]
+        }
+      },
+      "allOf": [
+        {
+          "if": { "required": ["type"], "properties": { "type": { "const": "lonlat_regular" } } },
+          "then": {
+            "required": ["type", "width", "height", "bounds"],
+            "additionalProperties": false,
+            "properties": {
+              "type": true,
+              "description": { "$ref": "#/$defs/text" },
+              "width": { "type": "integer", "minimum": 1, "maximum": 1048576 },
+              "height": { "type": "integer", "minimum": 1, "maximum": 1048576 },
+              "bounds": {
+                "type": "object",
+                "required": ["west", "east", "north", "south"],
+                "additionalProperties": false,
+                "properties": {
+                  "west": { "type": "number", "minimum": -180, "exclusiveMaximum": 180 },
+                  "east": { "type": "number", "exclusiveMinimum": -180, "maximum": 540 },
+                  "north": { "type": "number", "minimum": -90, "maximum": 90 },
+                  "south": { "type": "number", "minimum": -90, "maximum": 90 }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "classTable": {
+      "type": "object",
+      "required": ["taxonomy", "classes"],
+      "additionalProperties": false,
+      "properties": {
+        "taxonomy": { "$ref": "#/$defs/namespacedId", "description": "Namespaced identifier of the producer's classification scheme." },
+        "title": { "$ref": "#/$defs/shortText" },
+        "description": { "$ref": "#/$defs/text" },
+        "version": { "$ref": "#/$defs/shortText" },
+        "classes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["code", "id", "label"],
+            "additionalProperties": false,
+            "properties": {
+              "code": { "type": "integer", "minimum": 0, "maximum": 65535 },
+              "id": { "$ref": "#/$defs/namespacedId" },
+              "label": { "$ref": "#/$defs/shortText" },
+              "description": { "$ref": "#/$defs/text" },
+              "color": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$", "description": "Optional display colour. Never used to identify the class." },
+              "realm": { "enum": ["terrestrial", "marine", "freshwater", "other"] }
+            }
+          }
+        }
+      }
+    },
+    "aggregationStep": {
+      "type": "object",
+      "required": ["statistic", "over"],
+      "additionalProperties": false,
+      "properties": {
+        "statistic": { "enum": ["mean", "minimum", "maximum", "sum", "median", "standard_deviation"] },
+        "over": { "enum": ["timesteps", "days", "periods", "years"] },
+        "within": { "enum": ["day", "period", "year", "span"] }
+      },
+      "allOf": [
+        {
+          "if": { "required": ["over"], "properties": { "over": { "enum": ["timesteps", "days"] } } },
+          "then": { "required": ["within"] },
+          "else": { "properties": { "within": false } }
+        }
+      ]
+    },
+    "yearPeriod": {
+      "type": "object",
+      "required": ["year"],
+      "additionalProperties": false,
+      "properties": {
+        "year": { "type": "integer" },
+        "period": { "$ref": "#/$defs/localId" }
+      }
+    },
+    "time": {
+      "type": "object",
+      "required": ["calendar"],
+      "additionalProperties": false,
+      "properties": {
+        "calendar": { "$ref": "#/$defs/localId" },
+        "label": { "$ref": "#/$defs/shortText" },
+        "span": {
+          "type": "object",
+          "required": ["start", "end"],
+          "additionalProperties": false,
+          "properties": {
+            "start": { "$ref": "#/$defs/yearPeriod" },
+            "end": { "$ref": "#/$defs/yearPeriod" }
+          },
+          "description": "Inclusive range of calendar years (optionally periods) that the aggregation covers."
+        },
+        "aggregation": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/aggregationStep" },
+          "description": "Ordered reductions applied to the underlying time series, first to last."
+        },
+        "select_periods": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/localId" },
+          "description": "Restrict the underlying samples to these calendar periods of each year before aggregating (e.g. a single-month climatology)."
+        },
+        "timestep_s": { "type": "number", "exclusiveMinimum": 0, "description": "Model timestep length in SI seconds, if relevant." },
+        "instant": {
+          "type": "object",
+          "required": ["year"],
+          "additionalProperties": false,
+          "properties": {
+            "year": { "type": "integer" },
+            "period": { "$ref": "#/$defs/localId" },
+            "day": { "type": "integer", "minimum": 1 }
+          }
+        }
+      },
+      "if": { "required": ["instant"] },
+      "then": { "properties": { "span": false, "aggregation": false, "select_periods": false } },
+      "else": { "required": ["span", "aggregation"] }
+    },
+    "statistics": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Optional observed statistics over valid samples, in layer units. Informative but checked for consistency.",
+      "properties": {
+        "valid_count": { "type": "integer", "minimum": 0 },
+        "minimum": { "type": "number" },
+        "maximum": { "type": "number" },
+        "mean": { "type": "number" }
+      }
+    },
+    "layerSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Where this raster came from before delivery on its grid.",
+      "properties": {
+        "description": { "$ref": "#/$defs/text" },
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 },
+        "resampling": { "enum": ["none", "nearest", "mode", "bilinear", "bicubic", "area_mean", "minimum", "maximum", "other"] },
+        "notes": { "$ref": "#/$defs/text" }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "producer": { "$ref": "#/$defs/producer" },
+        "derived_from": { "type": "array", "items": { "$ref": "#/$defs/localId" } },
+        "notes": { "$ref": "#/$defs/text" }
+      }
+    },
+    "validityMask": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "additionalProperties": false,
+      "properties": {
+        "path": { "allOf": [{ "$ref": "#/$defs/payloadPath" }, { "pattern": "^masks/" }] },
+        "sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "layer": {
+      "type": "object",
+      "required": ["id", "kind", "path", "sha256"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/localId" },
+        "kind": { "anyOf": [{ "enum": ["scalar", "categorical", "mask", "reference"] }, { "$ref": "#/$defs/namespacedId" }] },
+        "title": { "$ref": "#/$defs/shortText" },
+        "description": { "$ref": "#/$defs/text" },
+        "definition": { "$ref": "#/$defs/text" },
+        "quantity": { "anyOf": [{ "$ref": "#/$defs/registryId" }, { "$ref": "#/$defs/namespacedId" }] },
+        "grid": { "$ref": "#/$defs/localId" },
+        "path": { "$ref": "#/$defs/payloadPath" },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "units": { "$ref": "#/$defs/shortText" },
+        "encoding": {
+          "type": "object",
+          "required": ["type"],
+          "properties": {
+            "type": { "enum": ["png16_linear", "png16_codes", "png8_binary"] },
+            "min": { "type": "number" },
+            "max": { "type": "number" }
+          },
+          "additionalProperties": false
+        },
+        "validity_mask": { "$ref": "#/$defs/validityMask" },
+        "time": { "$ref": "#/$defs/time" },
+        "qualifiers": { "type": "object" },
+        "statistics": { "$ref": "#/$defs/statistics" },
+        "class_table": { "$ref": "#/$defs/localId" },
+        "source": { "$ref": "#/$defs/layerSource" },
+        "provenance": { "$ref": "#/$defs/provenance" },
+        "role": { "enum": ["preview", "legend", "colour_key", "illustration", "other"] },
+        "registration": { "enum": ["registered", "unregistered"] },
+        "depicts": { "type": "array", "items": { "$ref": "#/$defs/localId" } },
+        "extensions": { "$ref": "#/$defs/extensions" }
+      },
+      "allOf": [
+        {
+          "if": { "required": ["kind"], "properties": { "kind": { "const": "scalar" } } },
+          "then": {
+            "required": ["quantity", "grid", "units", "encoding"],
+            "properties": {
+              "path": { "pattern": "^maps/" },
+              "encoding": {
+                "required": ["type", "min", "max"],
+                "properties": { "type": { "const": "png16_linear" } }
+              },
+              "class_table": false, "role": false, "registration": false, "depicts": false
+            }
+          }
+        },
+        {
+          "if": { "required": ["kind"], "properties": { "kind": { "const": "categorical" } } },
+          "then": {
+            "required": ["quantity", "grid", "encoding", "class_table"],
+            "properties": {
+              "path": { "pattern": "^maps/" },
+              "encoding": {
+                "properties": { "type": { "const": "png16_codes" }, "min": false, "max": false }
+              },
+              "units": false, "statistics": false, "role": false, "registration": false, "depicts": false
+            }
+          }
+        },
+        {
+          "if": { "required": ["kind"], "properties": { "kind": { "const": "mask" } } },
+          "then": {
+            "required": ["quantity", "grid", "encoding"],
+            "properties": {
+              "path": { "pattern": "^maps/" },
+              "encoding": {
+                "properties": { "type": { "const": "png8_binary" }, "min": false, "max": false }
+              },
+              "units": false, "statistics": false, "class_table": false, "role": false, "registration": false, "depicts": false
+            }
+          }
+        },
+        {
+          "if": { "required": ["kind"], "properties": { "kind": { "const": "reference" } } },
+          "then": {
+            "required": ["role", "registration"],
+            "properties": {
+              "path": { "pattern": "^previews/" },
+              "quantity": false, "units": false, "encoding": false, "validity_mask": false, "time": false,
+              "qualifiers": false, "statistics": false, "class_table": false, "source": false, "definition": false
+            },
+            "if": { "required": ["registration"], "properties": { "registration": { "const": "registered" } } },
+            "then": { "required": ["grid"] },
+            "else": { "properties": { "grid": false } }
+          }
+        },
+        {
+          "if": { "required": ["kind"], "properties": { "kind": { "$ref": "#/$defs/namespacedId" } } },
+          "then": {
+            "required": ["quantity", "definition"],
+            "properties": { "path": { "pattern": "^maps/" } }
+          }
+        }
+      ]
+    }
+  }
+}

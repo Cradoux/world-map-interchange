@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Cradoux/world-map-interchange/main/schemas/0.1.0/sidecar.schema.json",
+  "title": "World Map Interchange per-image sidecar (experimental draft 0.1.0)",
+  "description": "Optional convenience copy of one layer definition, stored next to its image as '<image path>.json'. The manifest is authoritative and the sidecar must equal it exactly.",
+  "type": "object",
+  "required": ["format", "format_version", "generated_from", "layer"],
+  "additionalProperties": false,
+  "properties": {
+    "format": { "const": "world-map-interchange-sidecar" },
+    "format_version": { "type": "string", "pattern": "^0\\.1\\.(0|[1-9][0-9]*)$" },
+    "generated_from": { "const": "manifest.json" },
+    "layer": { "$ref": "manifest.schema.json#/$defs/layer" },
+    "grid": { "$ref": "manifest.schema.json#/$defs/grid" },
+    "class_table": { "$ref": "manifest.schema.json#/$defs/classTable" }
+  }
+}

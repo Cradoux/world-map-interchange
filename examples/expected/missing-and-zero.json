@@ -1,0 +1,292 @@
+{
+  "example": "missing-and-zero",
+  "title": "Missing values versus legitimate zeros",
+  "package": "examples/valid/missing-and-zero",
+  "notes": [
+    "precip-annual row 7 col 5 is a valid 0 mm (pixel 0); row 3 col 22 is invalid (also pixel 0, but masked).",
+    "land-cover code 0 'bare ground' is a real class; invalid samples are identified by the shared validity mask.",
+    "snow-depth-max has valid_count 0 and no minimum/maximum statistics."
+  ],
+  "samples": [
+    {
+      "layer": "precip-annual",
+      "row": 0,
+      "col": 0,
+      "lat": 84.375,
+      "lon": -174.375,
+      "valid": true,
+      "value": 0.0,
+      "units": "mm",
+      "pixel": 0,
+      "tolerance": 0.030518043793392843
+    },
+    {
+      "layer": "precip-annual",
+      "row": 0,
+      "col": 31,
+      "lat": 84.375,
+      "lon": 174.375,
+      "valid": true,
+      "value": 0.0,
+      "units": "mm",
+      "pixel": 0,
+      "tolerance": 0.030518043793392843
+    },
+    {
+      "layer": "precip-annual",
+      "row": 15,
+      "col": 0,
+      "lat": -84.375,
+      "lon": -174.375,
+      "valid": true,
+      "value": 0.0,
+      "units": "mm",
+      "pixel": 0,
+      "tolerance": 0.030518043793392843
+    },
+    {
+      "layer": "precip-annual",
+      "row": 15,
+      "col": 31,
+      "lat": -84.375,
+      "lon": 174.375,
+      "valid": true,
+      "value": 0.0,
+      "units": "mm",
+      "pixel": 0,
+      "tolerance": 0.030518043793392843
+    },
+    {
+      "layer": "precip-annual",
+      "row": 8,
+      "col": 16,
+      "lat": -5.625,
+      "lon": 5.625,
+      "valid": true,
+      "value": 2264.94,
+      "units": "mm",
+      "pixel": 37108,
+      "tolerance": 0.030518043793392843
+    },
+    {
+      "layer": "precip-annual",
+      "row": 4,
+      "col": 10,
+      "lat": 39.375,
+      "lon": -61.875,
+      "valid": true,
+      "value": 405.89,
+      "units": "mm",
+      "pixel": 6650,
+      "tolerance": 0.030518043793392843
+    },
+    {
+      "layer": "precip-annual",
+      "row": 12,
+      "col": 21,
+      "lat": -50.625,
+      "lon": 61.875,
+      "valid": true,
+      "value": 533.46,
+      "units": "mm",
+      "pixel": 8740,
+      "tolerance": 0.030518043793392843
+    },
+    {
+      "layer": "precip-annual",
+      "row": 7,
+      "col": 1,
+      "lat": 5.625,
+      "lon": -163.125,
+      "valid": true,
+      "value": 2312.4,
+      "units": "mm",
+      "pixel": 37886,
+      "tolerance": 0.030518043793392843
+    },
+    {
+      "layer": "precip-annual",
+      "row": 7,
+      "col": 5,
+      "lat": 5.625,
+      "lon": -118.125,
+      "valid": true,
+      "value": 0.0,
+      "units": "mm",
+      "pixel": 0,
+      "tolerance": 0.030518043793392843
+    },
+    {
+      "layer": "precip-annual",
+      "row": 3,
+      "col": 22,
+      "lat": 50.625,
+      "lon": 73.125,
+      "valid": false
+    },
+    {
+      "layer": "land-cover",
+      "row": 0,
+      "col": 0,
+      "lat": 84.375,
+      "lon": -174.375,
+      "valid": true,
+      "code": 2,
+      "class_id": "example:permanent_ice"
+    },
+    {
+      "layer": "land-cover",
+      "row": 0,
+      "col": 31,
+      "lat": 84.375,
+      "lon": 174.375,
+      "valid": true,
+      "code": 2,
+      "class_id": "example:permanent_ice"
+    },
+    {
+      "layer": "land-cover",
+      "row": 15,
+      "col": 0,
+      "lat": -84.375,
+      "lon": -174.375,
+      "valid": true,
+      "code": 2,
+      "class_id": "example:permanent_ice"
+    },
+    {
+      "layer": "land-cover",
+      "row": 15,
+      "col": 31,
+      "lat": -84.375,
+      "lon": 174.375,
+      "valid": true,
+      "code": 2,
+      "class_id": "example:permanent_ice"
+    },
+    {
+      "layer": "land-cover",
+      "row": 8,
+      "col": 16,
+      "lat": -5.625,
+      "lon": 5.625,
+      "valid": true,
+      "code": 1,
+      "class_id": "example:vegetated"
+    },
+    {
+      "layer": "land-cover",
+      "row": 4,
+      "col": 10,
+      "lat": 39.375,
+      "lon": -61.875,
+      "valid": true,
+      "code": 1,
+      "class_id": "example:vegetated"
+    },
+    {
+      "layer": "land-cover",
+      "row": 12,
+      "col": 21,
+      "lat": -50.625,
+      "lon": 61.875,
+      "valid": true,
+      "code": 1,
+      "class_id": "example:vegetated"
+    },
+    {
+      "layer": "land-cover",
+      "row": 7,
+      "col": 5,
+      "lat": 5.625,
+      "lon": -118.125,
+      "valid": true,
+      "code": 0,
+      "class_id": "example:bare_ground"
+    },
+    {
+      "layer": "land-cover",
+      "row": 3,
+      "col": 22,
+      "lat": 50.625,
+      "lon": 73.125,
+      "valid": false
+    },
+    {
+      "layer": "land-cover",
+      "row": 6,
+      "col": 4,
+      "lat": 16.875,
+      "lon": -129.375,
+      "valid": true,
+      "code": 0,
+      "class_id": "example:bare_ground"
+    },
+    {
+      "layer": "land-cover",
+      "row": 3,
+      "col": 0,
+      "lat": 50.625,
+      "lon": -174.375,
+      "valid": true,
+      "code": 1,
+      "class_id": "example:vegetated"
+    },
+    {
+      "layer": "snow-depth-max",
+      "row": 0,
+      "col": 0,
+      "lat": 84.375,
+      "lon": -174.375,
+      "valid": false
+    },
+    {
+      "layer": "snow-depth-max",
+      "row": 0,
+      "col": 31,
+      "lat": 84.375,
+      "lon": 174.375,
+      "valid": false
+    },
+    {
+      "layer": "snow-depth-max",
+      "row": 15,
+      "col": 0,
+      "lat": -84.375,
+      "lon": -174.375,
+      "valid": false
+    },
+    {
+      "layer": "snow-depth-max",
+      "row": 15,
+      "col": 31,
+      "lat": -84.375,
+      "lon": 174.375,
+      "valid": false
+    },
+    {
+      "layer": "snow-depth-max",
+      "row": 8,
+      "col": 16,
+      "lat": -5.625,
+      "lon": 5.625,
+      "valid": false
+    },
+    {
+      "layer": "snow-depth-max",
+      "row": 4,
+      "col": 10,
+      "lat": 39.375,
+      "lon": -61.875,
+      "valid": false
+    },
+    {
+      "layer": "snow-depth-max",
+      "row": 12,
+      "col": 21,
+      "lat": -50.625,
+      "lon": 61.875,
+      "valid": false
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "format": "world-map-interchange-sidecar",
+  "format_version": "0.1.0",
+  "generated_from": "manifest.json",
+  "layer": {
+    "id": "sea-floor-depth",
+    "kind": "scalar",
+    "quantity": "sea_floor_depth",
+    "title": "Sea-floor depth (positive down)",
+    "grid": "global-128",
+    "path": "maps/sea-floor-depth.png",
+    "sha256": "d5c9d7c778de47ccd23dcf53877c3628618fabf347094628f2322880df2bc628",
+    "units": "m",
+    "encoding": {
+      "type": "png16_linear",
+      "min": 0.0,
+      "max": 8000.0
+    },
+    "validity_mask": {
+      "path": "masks/ocean-only.png",
+      "sha256": "1845e46128b90dea70652d9b9b5c297a21a67b390edb9ef55ba232540e82864e"
+    },
+    "statistics": {
+      "valid_count": 5477,
+      "minimum": 0.244144,
+      "maximum": 5127.76379,
+      "mean": 1975.908949
+    }
+  },
+  "grid": {
+    "type": "lonlat_regular",
+    "width": 128,
+    "height": 64,
+    "bounds": {
+      "west": -180.0,
+      "east": 180.0,
+      "north": 90.0,
+      "south": -90.0
+    }
+  }
+}

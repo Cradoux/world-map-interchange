@@ -1,0 +1,60 @@
+name: Proposal
+description: Propose a new quantity, layer kind, geometry, field or rule change.
+title: "[Proposal] "
+labels: ["proposal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for proposing a change. Concrete use cases and example data make proposals much easier to evaluate.
+        Please don't attach private worlds, proprietary code or assets you cannot redistribute.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Registry quantity or qualifier
+        - Layer kind or encoding
+        - Geometry / projection
+        - Time / calendar / aggregation
+        - Provenance / metadata
+        - Package structure / integrity
+        - Reference tools
+        - Governance / process
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What can't be exchanged reliably today? Which tools would produce and consume it?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Exact fields, definitions, units, and how consumers should behave. Draft spec text is welcome.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Including using a namespaced extension instead.
+  - type: dropdown
+    id: compatibility
+    attributes:
+      label: Compatibility
+      options:
+        - Compatible addition
+        - Incompatible change
+        - Not sure
+    validations:
+      required: true
+  - type: textarea
+    id: related
+    attributes:
+      label: Related open decisions or proposals
+      description: For example "open-decisions A7" or "docs/proposals/float32-rasters.md".

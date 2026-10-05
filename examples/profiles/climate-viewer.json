@@ -1,0 +1,22 @@
+{
+  "$schema": "../../schemas/0.1.0/capabilities.schema.json",
+  "consumer": { "name": "Example climate viewer (illustrative profile)", "version": "0.1.0" },
+  "kinds": ["scalar", "categorical", "mask", "reference"],
+  "grid_types": ["lonlat_regular"],
+  "quantities": [
+    "air_temperature",
+    "surface_temperature",
+    "sea_surface_temperature",
+    "rainfall_amount",
+    "precipitation_amount",
+    "snowfall_amount",
+    "snow_depth",
+    "snow_water_equivalent",
+    "snow_cover_fraction",
+    "volumetric_soil_moisture",
+    "biome",
+    "ocean_mask"
+  ],
+  "retain_unrecognised": true,
+  "required_quantities": []
+}

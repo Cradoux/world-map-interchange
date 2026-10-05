@@ -1,0 +1,9 @@
+{
+  "$schema": "../../schemas/0.1.0/capabilities.schema.json",
+  "consumer": { "name": "Example heightmap importer (illustrative profile)", "version": "0.1.0" },
+  "kinds": ["scalar", "mask", "reference"],
+  "grid_types": ["lonlat_regular"],
+  "quantities": ["elevation", "ocean_mask", "lake_mask", "river_mask"],
+  "retain_unrecognised": false,
+  "required_quantities": ["elevation"]
+}

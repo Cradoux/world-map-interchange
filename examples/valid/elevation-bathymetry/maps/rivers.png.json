@@ -1,0 +1,30 @@
+{
+  "format": "world-map-interchange-sidecar",
+  "format_version": "0.1.0",
+  "generated_from": "manifest.json",
+  "layer": {
+    "id": "rivers",
+    "kind": "mask",
+    "quantity": "river_mask",
+    "grid": "global-128",
+    "path": "maps/rivers.png",
+    "sha256": "b36da6e65fd0bf4dd7c0ab879213e40f1da30c4ee9fa7267f45c6c1a23ed94c5",
+    "encoding": {
+      "type": "png8_binary"
+    },
+    "qualifiers": {
+      "rasterisation": "Synthetic sinusoidal channel, one cell wide"
+    }
+  },
+  "grid": {
+    "type": "lonlat_regular",
+    "width": 128,
+    "height": 64,
+    "bounds": {
+      "west": -180.0,
+      "east": 180.0,
+      "north": 90.0,
+      "south": -90.0
+    }
+  }
+}

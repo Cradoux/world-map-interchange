@@ -1,0 +1,177 @@
+{
+  "absolute-archive-path": {
+    "target": "absolute-archive-path.zip",
+    "error_codes": [
+      "archive.unsafe_path"
+    ],
+    "reason": "Archive entries must be relative; absolute and drive-letter paths are rejected."
+  },
+  "amount-with-mean-aggregation": {
+    "target": "amount-with-mean-aggregation",
+    "error_codes": [
+      "semantics.accumulation"
+    ],
+    "reason": "precipitation_amount must start with a sum; a mean over timesteps describes a rate (use precipitation_rate)."
+  },
+  "bad-hash": {
+    "target": "bad-hash",
+    "error_codes": [
+      "hash.mismatch"
+    ],
+    "reason": "The declared SHA-256 is all zeros."
+  },
+  "dimension-mismatch": {
+    "target": "dimension-mismatch",
+    "error_codes": [
+      "dimension.mismatch"
+    ],
+    "reason": "The grid declares 20x8 but the PNG is 16x8."
+  },
+  "duplicate-archive-entry": {
+    "target": "duplicate-archive-entry.zip",
+    "error_codes": [
+      "archive.duplicate_entry"
+    ],
+    "reason": "Two entries share one name, so readers could disagree about which is authoritative."
+  },
+  "extension-without-definition": {
+    "target": "extension-without-definition",
+    "error_codes": [
+      "quantity.definition_missing"
+    ],
+    "reason": "Namespaced quantities must say what their values mean."
+  },
+  "incomplete-aggregation": {
+    "target": "incomplete-aggregation",
+    "error_codes": [
+      "time.aggregation_incomplete"
+    ],
+    "reason": "A mean within each period of each year leaves year and period dimensions; a final reduction is missing."
+  },
+  "inconsistent-units": {
+    "target": "inconsistent-units",
+    "error_codes": [
+      "units.incompatible"
+    ],
+    "reason": "air_temperature must use K or degC; 'mm' is a length."
+  },
+  "interpolated-class-codes": {
+    "target": "interpolated-class-codes",
+    "error_codes": [
+      "resampling.invalid_for_kind"
+    ],
+    "reason": "Class codes cannot be interpolated."
+  },
+  "invalid-png-depth": {
+    "target": "invalid-png-depth",
+    "error_codes": [
+      "png.type"
+    ],
+    "reason": "Scalar layers must be 16-bit greyscale; this one is 8-bit."
+  },
+  "inverted-encoding-range": {
+    "target": "inverted-encoding-range",
+    "error_codes": [
+      "encoding.range"
+    ],
+    "reason": "encoding.min must be strictly less than encoding.max."
+  },
+  "manifest-not-at-root": {
+    "target": "manifest-not-at-root.zip",
+    "error_codes": [
+      "manifest.missing"
+    ],
+    "reason": "Everything sits inside a 'bundle/' folder; manifest.json must be at the archive root."
+  },
+  "mask-not-binary": {
+    "target": "mask-not-binary",
+    "error_codes": [
+      "mask.values"
+    ],
+    "reason": "Binary masks may contain only 0 and 255; this one contains 128."
+  },
+  "missing-file": {
+    "target": "missing-file",
+    "error_codes": [
+      "file.missing"
+    ],
+    "reason": "maps/t-annual-mean.png is listed but not present."
+  },
+  "missing-grid-reference": {
+    "target": "missing-grid-reference",
+    "error_codes": [
+      "reference.missing"
+    ],
+    "reason": "The layer uses grid 'not-declared'."
+  },
+  "png-transparency": {
+    "target": "png-transparency",
+    "error_codes": [
+      "png.transparency"
+    ],
+    "reason": "tRNS would imply transparency-based validity; use a validity mask."
+  },
+  "reference-only": {
+    "target": "reference-only",
+    "error_codes": [
+      "package.no_data_layers"
+    ],
+    "reason": "A reference image does not substitute for numeric data."
+  },
+  "seam-bounds-reversed": {
+    "target": "seam-bounds-reversed",
+    "error_codes": [
+      "grid.bounds"
+    ],
+    "reason": "Write a 170E..170W region as west 170, east 190."
+  },
+  "sidecar-mismatch": {
+    "target": "sidecar-mismatch",
+    "error_codes": [
+      "sidecar.mismatch"
+    ],
+    "reason": "The sidecar copy changes encoding.max; the manifest is authoritative."
+  },
+  "statistics-inconsistent": {
+    "target": "statistics-inconsistent",
+    "error_codes": [
+      "statistics.inconsistent"
+    ],
+    "reason": "Observed extrema must agree with decoded data within half a step."
+  },
+  "symlink-archive-entry": {
+    "target": "symlink-archive-entry.zip",
+    "error_codes": [
+      "archive.symlink"
+    ],
+    "reason": "Symlink entries are rejected rather than followed."
+  },
+  "temperature-without-elevation-reference": {
+    "target": "temperature-without-elevation-reference",
+    "error_codes": [
+      "qualifiers.invalid"
+    ],
+    "reason": "air_temperature requires qualifiers.elevation_reference."
+  },
+  "unknown-class-code": {
+    "target": "unknown-class-code",
+    "error_codes": [
+      "class.unknown_code"
+    ],
+    "reason": "Pixel (4, 4) has code 7, which is not in the class table."
+  },
+  "unknown-quantity": {
+    "target": "unknown-quantity",
+    "error_codes": [
+      "quantity.unknown"
+    ],
+    "reason": "'temperature' is not a registry id; use air_temperature or a namespaced extension."
+  },
+  "unsafe-archive-path": {
+    "target": "unsafe-archive-path.zip",
+    "error_codes": [
+      "archive.unsafe_path"
+    ],
+    "reason": "The archive contains '../escape.png', which would escape an extraction directory."
+  }
+}

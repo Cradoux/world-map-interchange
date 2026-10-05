@@ -1,0 +1,73 @@
+{
+  "format": "world-map-interchange-sidecar",
+  "format_version": "0.1.0",
+  "generated_from": "manifest.json",
+  "layer": {
+    "id": "lithology",
+    "kind": "categorical",
+    "quantity": "lithology",
+    "grid": "global-64",
+    "path": "maps/lithology.png",
+    "sha256": "72156061c131bd728531654dd37e4c13e2f1d2722207579bc57c57bc531145ec",
+    "encoding": {
+      "type": "png16_codes"
+    },
+    "class_table": "example-rocks",
+    "qualifiers": {
+      "level": "surface"
+    }
+  },
+  "grid": {
+    "type": "lonlat_regular",
+    "width": 64,
+    "height": 32,
+    "bounds": {
+      "west": -180.0,
+      "east": 180.0,
+      "north": 90.0,
+      "south": -90.0
+    }
+  },
+  "class_table": {
+    "taxonomy": "example:rock-types-v1",
+    "title": "Example surface rock types v1",
+    "classes": [
+      {
+        "code": 0,
+        "id": "example:unconsolidated_sediment",
+        "label": "Unconsolidated sediment",
+        "color": "#E5D3B3"
+      },
+      {
+        "code": 1,
+        "id": "example:granite",
+        "label": "Granite",
+        "color": "#C39BD3"
+      },
+      {
+        "code": 2,
+        "id": "example:basalt",
+        "label": "Basalt",
+        "color": "#4D5656"
+      },
+      {
+        "code": 3,
+        "id": "example:limestone",
+        "label": "Limestone",
+        "color": "#F7F9F9"
+      },
+      {
+        "code": 4,
+        "id": "example:sandstone",
+        "label": "Sandstone",
+        "color": "#E59866"
+      },
+      {
+        "code": 5,
+        "id": "example:metamorphic",
+        "label": "Metamorphic",
+        "color": "#7D6608"
+      }
+    ]
+  }
+}

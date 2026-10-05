@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Python ${{ matrix.python }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ["3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install
+        run: uv sync --locked
+      - name: Unit and example tests
+        run: uv run pytest -q
+
+  checks:
+    name: Examples, registry and schemas
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: uv sync --locked
+      - name: Generated examples are up to date
+        run: uv run python scripts/generate_examples.py --check
+      - name: Registry page is up to date
+        run: uv run python scripts/render_registry.py --check
+      - name: Validate valid examples
+        shell: bash
+        run: |
+          for p in examples/valid/*/ examples/packed/*.zip; do
+            echo "== $p"
+            uv run wmi validate "$p"
+          done
+      - name: Invalid examples are rejected
+        shell: bash
+        run: |
+          for p in examples/invalid/*/ examples/invalid/*.zip; do
+            if uv run wmi validate "$p" > /dev/null; then
+              echo "::error::$p unexpectedly validated"; exit 1
+            fi
+          done
+      - name: Build distribution
+        run: uv build

@@ -1,0 +1,430 @@
+{
+  "example": "elevation-bathymetry",
+  "title": "Signed elevation with bathymetry and a known sea level",
+  "package": "examples/valid/elevation-bathymetry",
+  "notes": [
+    "Sea level is 0 m (datum 'sea_level'). With encoding -8000..6000 the derived sea-level pixel is floor(8000/14000*65535 + 0.5) = 37449.",
+    "Samples with valid=false in sea-floor-depth are land."
+  ],
+  "samples": [
+    {
+      "layer": "elevation",
+      "row": 0,
+      "col": 0,
+      "lat": 88.59375,
+      "lon": -178.59375,
+      "valid": true,
+      "value": -713.072,
+      "units": "m",
+      "pixel": 34111,
+      "tolerance": 0.10681315327687495
+    },
+    {
+      "layer": "elevation",
+      "row": 0,
+      "col": 127,
+      "lat": 88.59375,
+      "lon": 178.59375,
+      "valid": true,
+      "value": -776.651,
+      "units": "m",
+      "pixel": 33813,
+      "tolerance": 0.10681315327687495
+    },
+    {
+      "layer": "elevation",
+      "row": 63,
+      "col": 0,
+      "lat": -88.59375,
+      "lon": -178.59375,
+      "valid": true,
+      "value": -734.669,
+      "units": "m",
+      "pixel": 34010,
+      "tolerance": 0.10681315327687495
+    },
+    {
+      "layer": "elevation",
+      "row": 63,
+      "col": 127,
+      "lat": -88.59375,
+      "lon": 178.59375,
+      "valid": true,
+      "value": -755.054,
+      "units": "m",
+      "pixel": 33914,
+      "tolerance": 0.10681315327687495
+    },
+    {
+      "layer": "elevation",
+      "row": 32,
+      "col": 64,
+      "lat": -1.40625,
+      "lon": 1.40625,
+      "valid": true,
+      "value": 575.491,
+      "units": "m",
+      "pixel": 40142,
+      "tolerance": 0.10681315327687495
+    },
+    {
+      "layer": "elevation",
+      "row": 16,
+      "col": 42,
+      "lat": 43.59375,
+      "lon": -60.46875,
+      "valid": true,
+      "value": -3834.213,
+      "units": "m",
+      "pixel": 19500,
+      "tolerance": 0.10681315327687495
+    },
+    {
+      "layer": "elevation",
+      "row": 48,
+      "col": 85,
+      "lat": -46.40625,
+      "lon": 60.46875,
+      "valid": true,
+      "value": -294.017,
+      "units": "m",
+      "pixel": 36072,
+      "tolerance": 0.10681315327687495
+    },
+    {
+      "layer": "elevation",
+      "row": 27,
+      "col": 105,
+      "lat": 12.65625,
+      "lon": 116.71875,
+      "valid": true,
+      "value": -5127.807,
+      "units": "m",
+      "pixel": 13445,
+      "tolerance": 0.10681315327687495
+    },
+    {
+      "layer": "elevation",
+      "row": 28,
+      "col": 73,
+      "lat": 9.84375,
+      "lon": 26.71875,
+      "valid": true,
+      "value": 3707.204,
+      "units": "m",
+      "pixel": 54802,
+      "tolerance": 0.10681315327687495
+    },
+    {
+      "layer": "sea-floor-depth",
+      "row": 0,
+      "col": 0,
+      "lat": 88.59375,
+      "lon": -178.59375,
+      "valid": true,
+      "value": 713.072,
+      "units": "m",
+      "pixel": 5841,
+      "tolerance": 0.061036087586785685
+    },
+    {
+      "layer": "sea-floor-depth",
+      "row": 0,
+      "col": 127,
+      "lat": 88.59375,
+      "lon": 178.59375,
+      "valid": true,
+      "value": 776.651,
+      "units": "m",
+      "pixel": 6362,
+      "tolerance": 0.061036087586785685
+    },
+    {
+      "layer": "sea-floor-depth",
+      "row": 63,
+      "col": 0,
+      "lat": -88.59375,
+      "lon": -178.59375,
+      "valid": true,
+      "value": 734.669,
+      "units": "m",
+      "pixel": 6018,
+      "tolerance": 0.061036087586785685
+    },
+    {
+      "layer": "sea-floor-depth",
+      "row": 63,
+      "col": 127,
+      "lat": -88.59375,
+      "lon": 178.59375,
+      "valid": true,
+      "value": 755.054,
+      "units": "m",
+      "pixel": 6185,
+      "tolerance": 0.061036087586785685
+    },
+    {
+      "layer": "sea-floor-depth",
+      "row": 32,
+      "col": 64,
+      "lat": -1.40625,
+      "lon": 1.40625,
+      "valid": false
+    },
+    {
+      "layer": "sea-floor-depth",
+      "row": 16,
+      "col": 42,
+      "lat": 43.59375,
+      "lon": -60.46875,
+      "valid": true,
+      "value": 3834.213,
+      "units": "m",
+      "pixel": 31409,
+      "tolerance": 0.061036087586785685
+    },
+    {
+      "layer": "sea-floor-depth",
+      "row": 48,
+      "col": 85,
+      "lat": -46.40625,
+      "lon": 60.46875,
+      "valid": true,
+      "value": 294.017,
+      "units": "m",
+      "pixel": 2409,
+      "tolerance": 0.061036087586785685
+    },
+    {
+      "layer": "sea-floor-depth",
+      "row": 32,
+      "col": 87,
+      "lat": -1.40625,
+      "lon": 66.09375,
+      "valid": true,
+      "value": 0.282,
+      "units": "m",
+      "pixel": 2,
+      "tolerance": 0.061036087586785685
+    },
+    {
+      "layer": "sea-floor-depth",
+      "row": 27,
+      "col": 105,
+      "lat": 12.65625,
+      "lon": 116.71875,
+      "valid": true,
+      "value": 5127.807,
+      "units": "m",
+      "pixel": 42006,
+      "tolerance": 0.061036087586785685
+    },
+    {
+      "layer": "ocean",
+      "row": 0,
+      "col": 0,
+      "lat": 88.59375,
+      "lon": -178.59375,
+      "valid": true,
+      "mask": true
+    },
+    {
+      "layer": "ocean",
+      "row": 0,
+      "col": 127,
+      "lat": 88.59375,
+      "lon": 178.59375,
+      "valid": true,
+      "mask": true
+    },
+    {
+      "layer": "ocean",
+      "row": 63,
+      "col": 0,
+      "lat": -88.59375,
+      "lon": -178.59375,
+      "valid": true,
+      "mask": true
+    },
+    {
+      "layer": "ocean",
+      "row": 63,
+      "col": 127,
+      "lat": -88.59375,
+      "lon": 178.59375,
+      "valid": true,
+      "mask": true
+    },
+    {
+      "layer": "ocean",
+      "row": 32,
+      "col": 64,
+      "lat": -1.40625,
+      "lon": 1.40625,
+      "valid": true,
+      "mask": false
+    },
+    {
+      "layer": "ocean",
+      "row": 16,
+      "col": 42,
+      "lat": 43.59375,
+      "lon": -60.46875,
+      "valid": true,
+      "mask": true
+    },
+    {
+      "layer": "ocean",
+      "row": 48,
+      "col": 85,
+      "lat": -46.40625,
+      "lon": 60.46875,
+      "valid": true,
+      "mask": true
+    },
+    {
+      "layer": "lakes",
+      "row": 0,
+      "col": 0,
+      "lat": 88.59375,
+      "lon": -178.59375,
+      "valid": true,
+      "mask": false
+    },
+    {
+      "layer": "lakes",
+      "row": 0,
+      "col": 127,
+      "lat": 88.59375,
+      "lon": 178.59375,
+      "valid": true,
+      "mask": false
+    },
+    {
+      "layer": "lakes",
+      "row": 63,
+      "col": 0,
+      "lat": -88.59375,
+      "lon": -178.59375,
+      "valid": true,
+      "mask": false
+    },
+    {
+      "layer": "lakes",
+      "row": 63,
+      "col": 127,
+      "lat": -88.59375,
+      "lon": 178.59375,
+      "valid": true,
+      "mask": false
+    },
+    {
+      "layer": "lakes",
+      "row": 32,
+      "col": 64,
+      "lat": -1.40625,
+      "lon": 1.40625,
+      "valid": true,
+      "mask": false
+    },
+    {
+      "layer": "lakes",
+      "row": 16,
+      "col": 42,
+      "lat": 43.59375,
+      "lon": -60.46875,
+      "valid": true,
+      "mask": false
+    },
+    {
+      "layer": "lakes",
+      "row": 48,
+      "col": 85,
+      "lat": -46.40625,
+      "lon": 60.46875,
+      "valid": true,
+      "mask": false
+    },
+    {
+      "layer": "lakes",
+      "row": 18,
+      "col": 70,
+      "lat": 37.96875,
+      "lon": 18.28125,
+      "valid": true,
+      "mask": true
+    },
+    {
+      "layer": "rivers",
+      "row": 0,
+      "col": 0,
+      "lat": 88.59375,
+      "lon": -178.59375,
+      "valid": true,
+      "mask": false
+    },
+    {
+      "layer": "rivers",
+      "row": 0,
+      "col": 127,
+      "lat": 88.59375,
+      "lon": 178.59375,
+      "valid": true,
+      "mask": false
+    },
+    {
+      "layer": "rivers",
+      "row": 63,
+      "col": 0,
+      "lat": -88.59375,
+      "lon": -178.59375,
+      "valid": true,
+      "mask": false
+    },
+    {
+      "layer": "rivers",
+      "row": 63,
+      "col": 127,
+      "lat": -88.59375,
+      "lon": 178.59375,
+      "valid": true,
+      "mask": false
+    },
+    {
+      "layer": "rivers",
+      "row": 32,
+      "col": 64,
+      "lat": -1.40625,
+      "lon": 1.40625,
+      "valid": true,
+      "mask": false
+    },
+    {
+      "layer": "rivers",
+      "row": 16,
+      "col": 42,
+      "lat": 43.59375,
+      "lon": -60.46875,
+      "valid": true,
+      "mask": false
+    },
+    {
+      "layer": "rivers",
+      "row": 48,
+      "col": 85,
+      "lat": -46.40625,
+      "lon": 60.46875,
+      "valid": true,
+      "mask": false
+    },
+    {
+      "layer": "rivers",
+      "row": 25,
+      "col": 83,
+      "lat": 18.28125,
+      "lon": 54.84375,
+      "valid": true,
+      "mask": true
+    }
+  ]
+}
