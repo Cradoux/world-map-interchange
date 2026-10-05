@@ -24,6 +24,22 @@ worldbuilding, terrain and climate tools, including Rock3, Gleba and World Clima
 its developer has endorsed this draft or committed to implementing it.** The goal is joint development with equal
 technical input from each participating tool ([GOVERNANCE.md](GOVERNANCE.md)).
 
+## Adding WMI to your software
+
+WMI is meant to be built into existing tools: exporters, importers, or both. It is MIT licensed, so you can implement it
+or reuse this repository's code, schemas and registry in open or closed source products (keep the licence notice with
+copied files).
+
+- **[Integration guide](docs/integration-guide.md)**: a step-by-step procedure for developers. Inventory your maps, map
+  your geometry, implement export and import (Python library, CLI subprocess or native code in any language), test against
+  the shared fixtures, and check against a definition of done.
+- **[AGENTS.md](AGENTS.md)**: the same procedure as rules and key facts for AI coding agents, plus a
+  [ready-made prompt](docs/integration-guide.md#12-handing-this-task-to-a-coding-agent) for handing the task to one.
+  [llms.txt](llms.txt) indexes the documentation for LLM tools.
+- **Fixtures**: [examples/expected/](examples/expected/) gives decoded values for sample pixels in every valid example,
+  and [examples/invalid/](examples/invalid/) holds packages your reader must refuse. Both work for testing implementations in
+  any language.
+
 ## Contents
 
 | Path | What |
@@ -31,7 +47,8 @@ technical input from each participating tool ([GOVERNANCE.md](GOVERNANCE.md)).
 | [spec/0.1.0/specification.md](spec/0.1.0/specification.md) | Normative draft specification |
 | [spec/0.1.0/quantity-registry.md](spec/0.1.0/quantity-registry.md) | Quantity registry (generated from [registry/0.1.0/quantities.json](registry/0.1.0/quantities.json)) |
 | [schemas/0.1.0/](schemas/0.1.0/) | JSON Schema 2020-12: manifest, sidecar, registry, consumer capabilities, validation report |
-| [docs/producer-guide.md](docs/producer-guide.md) / [docs/consumer-guide.md](docs/consumer-guide.md) | Implementation guides |
+| [docs/integration-guide.md](docs/integration-guide.md) / [AGENTS.md](AGENTS.md) | Adding WMI to existing software, for developers and coding agents |
+| [docs/producer-guide.md](docs/producer-guide.md) / [docs/consumer-guide.md](docs/consumer-guide.md) | Producer and consumer rules in depth |
 | [docs/wcl-exporter-quickstart.md](docs/wcl-exporter-quickstart.md) | Quick-start for numeric climate exports |
 | [docs/open-decisions.md](docs/open-decisions.md) | Provisional choices that need review, and deferred topics |
 | [docs/proposals/](docs/proposals/) | float32, projections, vector fields, time series, scientific formats |
@@ -125,9 +142,12 @@ See [CONTRIBUTING.md](CONTRIBUTING.md), [GOVERNANCE.md](GOVERNANCE.md), [COMPATI
 
 ## Licence
 
-The original content of this repository (specification, schemas, registry, code, tests and synthetic examples) is under the
-[MIT licence](LICENSE). Datasets or packages contributed by others keep the licence their contributors declare, for
-example in a package's `package.license` field.
+[MIT](LICENSE), chosen for the widest possible adoption. It covers the specification, schemas, registry, reference code,
+tests and synthetic examples. Implementing the format needs no permission. If you copy files from this repository into
+your product, keep the MIT notice with them.
+
+A WMI package's map data is licensed separately, by its producer, through the package's `package.license` field (an
+SPDX expression). Datasets or packages contributed to discussions here keep the licence their contributors declare.
 
 References: [CF Conventions](https://cfconventions.org/) (terminology only; WMI does not claim CF compliance),
 [netCDF best practices](https://docs.unidata.ucar.edu/netcdf/NUG/best_practices.html), [PNG Third Edition](https://www.w3.org/TR/png-3/),

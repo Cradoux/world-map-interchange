@@ -1,0 +1,37 @@
+# World Map Interchange (WMI)
+
+> An experimental 0.1.0 draft format, MIT licensed, for exchanging georeferenced world maps (elevation, climate,
+> classes, masks) between worldbuilding and terrain tools. A package is a ZIP or folder with manifest.json and 16-bit
+> greyscale PNGs that have explicit linear decode ranges, units, quantities, grids and time statistics. It is a
+> proposal for joint development, not an endorsed standard.
+
+Start with AGENTS.md (rules and key facts), then docs/integration-guide.md (step-by-step procedure for adding
+import/export to existing software).
+
+## Core
+
+- [AGENTS.md](https://github.com/Cradoux/world-map-interchange/blob/main/AGENTS.md): rules and key facts for coding agents
+- [Integration guide](https://github.com/Cradoux/world-map-interchange/blob/main/docs/integration-guide.md): adding WMI to existing software, with tests and definition of done
+- [Specification 0.1.0](https://github.com/Cradoux/world-map-interchange/blob/main/spec/0.1.0/specification.md): normative rules
+- [Quantity registry](https://github.com/Cradoux/world-map-interchange/blob/main/spec/0.1.0/quantity-registry.md): quantities, units, qualifiers
+- [Manifest JSON Schema](https://raw.githubusercontent.com/Cradoux/world-map-interchange/main/schemas/0.1.0/manifest.schema.json)
+- [Registry JSON](https://raw.githubusercontent.com/Cradoux/world-map-interchange/main/registry/0.1.0/quantities.json)
+
+## Guides
+
+- [Producer guide](https://github.com/Cradoux/world-map-interchange/blob/main/docs/producer-guide.md)
+- [Consumer guide](https://github.com/Cradoux/world-map-interchange/blob/main/docs/consumer-guide.md)
+- [Climate exporter quick-start](https://github.com/Cradoux/world-map-interchange/blob/main/docs/wcl-exporter-quickstart.md)
+- [Compatibility policy](https://github.com/Cradoux/world-map-interchange/blob/main/COMPATIBILITY.md)
+
+## Examples and tests
+
+- [Examples overview](https://github.com/Cradoux/world-map-interchange/blob/main/examples/README.md): valid and invalid fixtures
+- [Expected decoded values](https://github.com/Cradoux/world-map-interchange/blob/main/examples/EXPECTED.md)
+- [Producer example code](https://github.com/Cradoux/world-map-interchange/blob/main/examples/code/write_climate_package.py)
+
+## Optional
+
+- [Open decisions](https://github.com/Cradoux/world-map-interchange/blob/main/docs/open-decisions.md)
+- [Deferred proposals](https://github.com/Cradoux/world-map-interchange/tree/main/docs/proposals)
+- [Changelog](https://github.com/Cradoux/world-map-interchange/blob/main/CHANGELOG.md)

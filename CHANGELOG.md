@@ -32,6 +32,12 @@ First public draft, for discussion.
   rainfall/precipitation/snowfall amounts and rates, snow depth, SWE, snow-cover fraction, volumetric soil moisture,
   soil moisture content, biome, lithology and land cover.
 
+### Documentation
+- Integration guide for adding WMI to existing software (inventory, geometry mapping, export, import, fixtures-based
+  testing, native implementation notes, definition of done, and a prompt for coding agents).
+- `AGENTS.md` with rules and key facts for AI coding agents, and `llms.txt` as a documentation index.
+- `LICENSE` is the unmodified MIT text, so licence scanners detect it. Notes on data licensing moved to the README.
+
 ### Tools and examples
 - `wmi` CLI: `validate`, `inspect`, `pack`, `rehash`, `sidecars`, `encode` and `decode`, with human-readable and JSON output.
 - Eight synthetic valid examples, 25 invalid examples, consumer profiles and a tested climate producer script.

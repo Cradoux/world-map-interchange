@@ -47,6 +47,8 @@ discussion continues.
 
 ## Development setup
 
+Coding agents working on this repository should follow [AGENTS.md](AGENTS.md), which lists the rules below in compact form.
+
 ```bash
 uv sync --locked
 uv run pytest
